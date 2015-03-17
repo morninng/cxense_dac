@@ -1,0 +1,170 @@
+@charset "UTF-8";
+
+html {
+	overflow-y:scroll;
+	height:100%;
+}
+
+body {
+	background:url(../images/bg/main_bg_01.png) repeat top left;
+	height:100%;
+}
+
+
+#spbtn {
+	}
+
+#spbtn a {
+	margin:0 auto;
+	display:block;
+	padding:16px 0 15px;
+	background:#8b8b8b;
+	width:1100px;
+	text-align:center;
+}
+
+/* header */
+/* ------------------------------------------------------------------------ */
+
+/* footer */
+/* ------------------------------------------------------------------------ */
+footer {
+	min-width:1100px;
+	clear:both;	
+	padding-top:30px;
+	text-align:right;
+}
+
+/* navigation */
+/* ------------------------------------------------------------------------ */
+#leftArea nav {
+	margin-top:28px;
+}
+#leftArea nav li {
+	margin-top:7px;
+	line-height:1;
+	font-size:12px;
+}
+#leftArea nav li:first-child {
+	margin-top:0;
+}
+
+#adguide {
+	margin-top:21px !important;	
+}
+
+#nav2 {
+	margin-top:30px;
+}
+#nav2 li {
+	margin-top:12px;
+	line-height:1;
+	font-size:12px;
+}
+#nav2 li.level2 {
+	margin-top:28px;
+}
+#nav2 li:first-child {
+	margin-top:0;	
+}
+
+
+
+/* leftArea */
+/* ------------------------------------------------------------------------ */
+#leftArea {
+	margin-right:40px;
+	padding:25px 0 0 50px;
+	float:left;	
+	width:225px;
+}
+#home #leftArea {
+	margin-right:0;
+	padding:25px 0 0 50px;
+	float:left;	
+	width:225px;
+}
+#leftArea h1 {
+	margin-bottom:20px;
+}
+
+#leftArea .copy {
+	margin:30px 0 20px;
+}
+
+
+/* rightArea */
+/* ------------------------------------------------------------------------ */
+#side {
+	float:right;
+	margin:25px 0 0 0;
+	width:190px;		
+}
+
+#home #side {
+	float:none;
+	margin:0;
+	width:192px;
+	position:absolute;
+	top:25px;
+	right:0;
+	height:1260px;	
+}
+
+
+/* contentArea */
+/* ------------------------------------------------------------------------ */
+#wrapper {
+	margin:0 auto;
+	width:1100px;
+	min-height:100%;
+}
+
+#mainArea {
+	display:inline;
+	float:right;
+	margin-right:55px;
+	width:780px;
+	position:relative;		
+}
+#home #mainArea {
+	float:right;
+	margin-right:53px;
+	width:794px;
+	position:relative;		
+}
+
+
+article {
+	float:left;
+	margin:23px 0 0 0;
+	width:550px;
+	position:relative;
+}
+#home article {
+	float:none;
+	width:794px;
+	padding:2px;
+	overflow:hidden;
+}
+
+.wide article {
+	width:780px;	
+}
+
+
+
+/* --------------------------------------------------------------------------------------
+ float解除
+--------------------------------------------------------------------------------------- */
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    zoom: 1;
+}

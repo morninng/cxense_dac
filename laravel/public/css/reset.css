@@ -1,0 +1,234 @@
+@charset "UTF-8";
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	box-sizing:border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+fieldset, img {
+border:0;
+}
+address, caption, code, em, th {
+font-style:normal;
+font-weight:normal;
+}
+table {
+border-spacing:0;
+}
+ol, ul {
+list-style:none;
+}
+h1, h2, h3, h4, h5, h6 {
+font-size:100%;
+font-weight:normal;
+}
+caption, th {
+text-align: left;
+}
+hr {
+display:none;
+}
+table {
+border-collapse:collapse; border-spacing:0;
+}
+img {
+vertical-align:top;	
+}
+
+strong {
+	font-weight:bold;	
+}
+em {
+	font-style:italic;
+}
+
+
+
+/* font */
+
+body {
+	font-size:13px;
+  	*font-size: small;
+    *font: x-small;
+    color: #333;
+    word-break: break-all; 
+	-webkit-text-size-adjust: none;
+}
+html > body {  
+	font-size:small\9;  
+}  
+
+
+#wrapper {
+	font-size: 93%;
+	line-height:2;	
+}
+
+p {
+	line-height:2;	
+}
+
+/*　フォント指定参考（#wrap 12px相当を100%とする）
+ * 10px 	84%
+ * 11px 	92%
+ * 12px 	100%
+ * 13px 	109%
+ * 14px 	117%
+ * 15px 	125%
+ * 16px 	134%
+ * 17px 	142%
+ * 18px 	150%
+ * 19px 	159%
+ * 20px 	167%
+ * 21px 	175%
+ * 22px 	184%
+ * 23px 	192%
+ * 24px 	200%
+ * 25px 	209%
+ * 26px 	217%
+ * */
+
+a {
+	color:#333;
+	text-decoration:none;	
+	-webkit-tap-highlight-color:rgba(111,111,111,0.70);
+}
+
+a.normalLink {
+	text-decoration:underline;		
+}
+
+a:hover {
+	text-decoration:none;	
+}
+
+.IEold a:hover {
+	color:#ccc;
+	text-decoration:underline;	
+}
+
+a.normalLink:hover {
+	text-decoration:none;		
+}
+/**/
+
+.aLeft {
+	text-align:left;	
+}
+.aCenter {
+	text-align:center;	
+}
+.aRight {
+	text-align:right;	
+}
+
+.floatLeft {
+	float:left;	
+}
+.floatRight {
+	float:right;	
+}
+
+
+/**/
+
+/* Style Adjust
+ * --------------------------------------- */
+.alignC{text-align:center;!important}
+.alignR{text-align:right;!important}
+.alignL{text-align:left;!important}
+.mt00{margin-top:0!important;}
+.mt05{margin-top:5px!important;}
+.mt10{margin-top:10px!important;}
+.mt15{margin-top:15px!important;}
+.mt20{margin-top:20px!important;}
+.mt30{margin-top:30px!important;}
+.mt40{margin-top:40px!important;}
+
+.mr00{margin-right:0!important;}
+.mr05{margin-right:5px!important;}
+.mr10{margin-right:10px!important;}
+.mr15{margin-right:15px!important;}
+.mr20{margin-right:20px!important;}
+.mr30{margin-right:30px!important;}
+.mr40{margin-right:40px!important;}
+
+.mb00{margin-bottom:0!important;}
+.mb05{margin-bottom:5px!important;}
+.mb10{margin-bottom:10px!important;}
+.mb15{margin-bottom:15px!important;}
+.mb20{margin-bottom:20px!important;}
+.mb30{margin-bottom:30px!important;}
+.mb40{margin-bottom:40px!important;}
+.mb45{margin-bottom:45px!important;}
+
+.ml00{margin-left:0!important;}
+.ml05{margin-left:5px!important;}
+.ml10{margin-left:10px!important;}
+.ml15{margin-left:15px!important;}
+.ml20{margin-left:20px!important;}
+.ml30{margin-left:30px!important;}
+.ml40{margin-left:40px!important;}
+
+.pt00{padding-top:0!important;}
+.pt05{padding-top:5px!important;}
+.pt10{padding-top:10px!important;}
+.pt15{padding-top:15px!important;}
+.pt20{padding-top:20px!important;}
+.pt30{padding-top:30px!important;}
+.pt40{padding-top:40px!important;}
+
+.pr00{padding-right:0!important;}
+.pr05{padding-right:5px!important;}
+.pr10{padding-right:10px!important;}
+.pr15{padding-right:15px!important;}
+.pr20{padding-right:20px!important;}
+.pr30{padding-right:30px!important;}
+.pr40{padding-right:40px!important;}
+
+.pb00{padding-bottom:0!important;}
+.pb05{padding-bottom:5px!important;}
+.pb10{padding-bottom:10px!important;}
+.pb15{padding-bottom:15px!important;}
+.pb20{padding-bottom:20px!important;}
+.pb30{padding-bottom:30px!important;}
+.pb40{padding-bottom:40px!important;}
+
+.pl00{padding-left:0!important;}
+.pl05{padding-left:5px!important;}
+.pl10{padding-left:10px!important;}
+.pl15{padding-left:15px!important;}
+.pl20{padding-left:20px!important;}
+.pl30{padding-left:30px!important;}
+.pl40{padding-left:40px!important;}
+
+
+/* アクセス解析タグ レイアウト調整 */
+body > iframe,
+body > img,
+body > a,
+#id_bivalves {
+	position:absolute;
+	top:0;
+	left:0;	
+}
+
+
+

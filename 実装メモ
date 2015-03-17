@@ -1,0 +1,6 @@
+■LAravel４→Laravel５変更
+
+　Viewは、App下からResource下にうつったようだ。
+nginx_root/public/laravel/resources
+　→
+

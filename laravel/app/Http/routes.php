@@ -11,7 +11,24 @@
 |
 */
 
+//require_once 'simple_html_dom.php';
+
 Route::get('/', 'WelcomeController@index');
+
+
+/*
+Route::get('/press/{article_id}', function($article_id)
+{
+	$press_id = $article_id;
+
+    return View::make("press")->with("press_id",$press_id);
+});
+*/
+Route::get('press/{article_year}/{article_context}', 'PressController@index');
+
+Route::get('press/', 'PressController@root');
+
+
 
 Route::get('/hello', function()
 {
@@ -19,6 +36,7 @@ Route::get('/hello', function()
 });
 
 Route::get('home', 'HomeController@index');
+Route::get('article', 'ArticleController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
