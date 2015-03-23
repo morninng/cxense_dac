@@ -24,11 +24,10 @@ Route::get('/press/{article_id}', function($article_id)
     return View::make("press")->with("press_id",$press_id);
 });
 */
-Route::get('press/{article_year}/{article_context}', 'PressController@index');
+Route::get('press/{article_year}/{article_context}', 'PressController@article');
+Route::get('press/', 'PressController@article_list');
 
-Route::get('press/', 'PressController@root');
-
-
+Route::get('/', 'DachomeController@index');
 
 Route::get('/hello', function()
 {
@@ -37,6 +36,9 @@ Route::get('/hello', function()
 
 Route::get('home', 'HomeController@index');
 Route::get('article', 'ArticleController@index');
+
+
+Route::get('keyword_matome/{keyword}', 'KeywordmatomeController@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

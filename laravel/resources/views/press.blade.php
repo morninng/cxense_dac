@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('presslayout')
 
 @section('leftbar_context')
 	<?php echo $leftbar_context ?>

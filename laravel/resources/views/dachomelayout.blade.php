@@ -7,24 +7,24 @@
 	<link rel="stylesheet" href="/css/reset.css">
 	<link rel="stylesheet" href="/css/layout.css">
 	<link rel="stylesheet" href="/css/module.css">
-
+	<link rel="stylesheet" href="/css/home.css">
 
 </head>
-<body>
+<body id="home" class="line5">
 	<div id="wrapper">
+		<div id="leftArea">
+				@yield('left_area_context')
+		</div>
 		<div id="mainArea">
 			<article>
-				@yield('title_context')
-				@yield('article_content')
-				<div id="kannrenn_kiji">
-					@yield('cxense_kannrenn');
-				</div>
+				@yield('article_context')
 			</article>
+			<div id="side">
+				<div>
+				@yield('side_context')
+				</div>
+			</div>
 		</div>
-	@yield('leftbar_context')
-
-	</div>
-	<div id="side">
 
 	</div>
 

@@ -1,0 +1,34 @@
+■webサイト全体から、ホットなキーワードを収集
+　＜URL＞
+　　traffic/keyword
+　＜出力＞
+　　　{"item":"オプトアウト",
+　　　{"item":"エージェント",
+　　　{"item":"メディア","
+　　　{"item":"具体業務","
+　　　{"item":"業務概要","
+　　　　こういったキーワード一覧を取得できる。
+　
+■Webサイトのトラフィックの情報を取得
+　　＜URL＞
+　　　　traffic
+　　＜フィルタ設定＞
+　　　 \"filters\":[{\"type\":\"keyword\" \"item\":\"$keyword\"}
+　　　 ＜出力＞
+　　　  data":{"events":745,"activeTime":15,"urls":108}}"
+　　　   数字の統計情報みたいなものを収集する。
+　　  　
+■ イベントに関連した情報を取得
+　　＜url＞
+　　   traffic/event
+　　   
+　　   
+■サイトに関連する情報を取得
+　＜URL＞
+　  profile/content/fetch
+　 <出力>
+　 
+
+　　 
+　　 
+　　 
