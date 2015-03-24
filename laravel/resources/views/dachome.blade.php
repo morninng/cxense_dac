@@ -19,13 +19,17 @@
 	<?php 
 		$i=0;
 		foreach($site_concept_array as $each_concept){
-			echo("<tr><td>");
-			echo($each_concept);
-			echo("</td><td>");
-			echo($site_concept_num_url_array[$i]);
-			echo("</td><td>");
-			echo($site_concept_num_pv_array[$i]);
-			echo("</td></tr>");
+	?>
+			<tr><td>
+				<a href=/keyword_matome/{{$each_concept}}>
+				{{$each_concept}}
+				</a>
+			</td><td>
+				{{$site_concept_num_url_array[$i]}}
+			</td><td>
+				{{$site_concept_num_pv_array[$i]}}
+			</td></tr>
+	<?php 
 			$i++;
 		}
 	?>

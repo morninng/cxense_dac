@@ -14,17 +14,17 @@ class KeywordmatomeController extends Controller {
 	/**
 	 * @return Response
 	 */
-	public function index()
+	public function index($keyword)
 	{
 		$domain_press = "http://www.dac.co.jp/press";
 		$html_context = file_get_html($domain_press);
 		$title_context = "<h1 class='pageTitle'>トレンドキーワード別の人気ページ</h1>";
-		$article_context = "広告効果測定";
+		$article_context = $keyword;
 
 		$leftbar_context = $html_context->find('div[id=leftArea]')[0];
 		$leftbar_context_converted = str_replace("src=\"/", "src=\"http://www.dac.co.jp/", $leftbar_context);
 
-		$url_array = $this->traffic_event();
+		$url_array = $this->traffic_event($keyword);
 		$link_array = [];
 
 		foreach($url_array as $url){
@@ -34,7 +34,6 @@ class KeywordmatomeController extends Controller {
 		}
 	//	var_dump($link_array);
 
-
 		return view('keywordmatome')
 				->with("title_context",$title_context)
 				->with("article_context",$article_context)
@@ -43,11 +42,11 @@ class KeywordmatomeController extends Controller {
 				->with("url_array",$url_array);
 	}
 
-	private function traffic_event()
+	private function traffic_event($keyword)
 	{
 		$url_array = array();
 
-		$keyword = "広告効果測定";
+	
 		$username="cxense-team@dac.co.jp";
 		$apikey="api&user&Qkc0a6QqYvTPjOsYbhR7Sg==";
 		$date = date("Y-m-d\TH:i:s.000O");
@@ -112,6 +111,7 @@ class KeywordmatomeController extends Controller {
 		$thumbnail_width = 0;
 		$thumbnail_height = 0;
 		$thumbnail_url = null;
+
 		foreach($thumbnail_array as  $thumbnail ){
 			$type = $thumbnail->{'type'};
 			if($type == "dominant"){
