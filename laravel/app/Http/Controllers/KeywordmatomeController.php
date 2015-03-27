@@ -29,10 +29,8 @@ class KeywordmatomeController extends Controller {
 
 		foreach($url_array as $url){
 			$link_content = $this->content_fetch($url);
-		//	var_dump($url . "<br>");
 			array_push($link_array, $link_content );
 		}
-	//	var_dump($link_array);
 
 		return view('keywordmatome')
 				->with("title_context",$title_context)
@@ -111,6 +109,11 @@ class KeywordmatomeController extends Controller {
 		$thumbnail_width = 0;
 		$thumbnail_height = 0;
 		$thumbnail_url = null;
+		$thumbnail_array = array();
+
+		if($obj->{'thumbnails'}){
+			$thumbnail_array = $obj->{'thumbnails'};
+		}
 
 		foreach($thumbnail_array as  $thumbnail ){
 			$type = $thumbnail->{'type'};

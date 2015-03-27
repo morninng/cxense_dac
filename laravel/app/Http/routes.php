@@ -37,8 +37,8 @@ Route::get('/hello', function()
 Route::get('home', 'HomeController@index');
 Route::get('article', 'ArticleController@index');
 
-
 Route::get('keyword_matome/{keyword}', 'KeywordmatomeController@index');
+Route::get('keyword_matome2/{keyword}', 'Keywordmatome2Controller@index');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

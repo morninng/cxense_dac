@@ -9,7 +9,7 @@ $signature=hash_hmac("sha256", $date, $apikey);
 
 $url_content_fetch = 'https://api.cxense.com/profile/content/fetch';
 $plainjson_payload_content_fetch = "{
-		\"url\":\"http://m.dac.co.jp/group/field.html\",
+		\"url\":\"http://www.dac.co.jp/irinfo/\",
 		\"groups\":[\"url\",\"title\",\"thumbnails\"]
 		}";
 
@@ -29,7 +29,12 @@ $result_content_fetch = file_get_contents($url_content_fetch, false, $context_co
 $obj = json_decode($result_content_fetch );
 echo($obj->{'url'});echo("<br>");
 echo($obj->{'title'});echo("<br>");
-$thumbnail_array = $obj->{'thumbnails'};
+
+$thumbnail_array = array();
+
+if($obj->{'thumbnails'}){
+	$thumbnail_array = $obj->{'thumbnails'};
+}
 
 	$thumbnail_width = 0;
 	$thumbnail_height = 0;

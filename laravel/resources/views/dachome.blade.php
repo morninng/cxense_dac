@@ -21,7 +21,7 @@
 		foreach($site_concept_array as $each_concept){
 	?>
 			<tr><td>
-				<a href=/keyword_matome/{{$each_concept}}>
+				<a href=/keyword_matome2/{{$each_concept}}>
 				{{$each_concept}}
 				</a>
 			</td><td>
