@@ -37,9 +37,23 @@ Route::get('/hello', function()
 Route::get('home', 'HomeController@index');
 Route::get('article', 'ArticleController@index');
 Route::get('parsepractice', 'ParseController@index');
+Route::get('parseretrieve', 'ParseController@retrieve_object');
 
 Route::get('keyword_matome/{keyword}', 'KeywordmatomeController@index');
 Route::get('keyword_matome2/{keyword}', 'Keywordmatome2Controller@index');
+
+Route::get('/parselogin','ParseauthController@getLogin');
+Route::post('/parselogin','ParseauthController@postLogin');
+Route::get('/parsesignin','ParseauthController@getSignin');
+Route::post('/parsesignin','ParseauthController@postSignin');
+// Route::post('/parsesignin',function(){return 'helloworld';});
+Route::get('/parselogout', 'ParseauthController@getLogout');
+
+Route::get('/registuser', function()
+{
+	return 'regist user info';
+});
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',
