@@ -1,5 +1,22 @@
 <?php namespace App\Http\Controllers;
 
+define( 'PARSE_SDK_DIR', './../vendor/parse/php-sdk/src/Parse/' );
+require './../vendor/autoload.php';
+
+use Parse\ParseObject;
+use Parse\ParseQuery;
+use Parse\ParseACL;
+use Parse\ParsePush;
+use Parse\ParseUser;
+use Parse\ParseInstallation;
+use Parse\ParseException;
+use Parse\ParseAnalytics;
+use Parse\ParseFile;
+use Parse\ParseCloud;
+use Parse\ParseClient;
+use Parse\ParseSessionStorage;
+
+
 include(app_path().'/Http/Controllers/simple_html_dom.php');
 
 class DachomeController extends Controller {
@@ -7,11 +24,29 @@ class DachomeController extends Controller {
 	/**
 	 * @return void
 	 */
+	public $login_status = false;
+	public function __construct(){
 
-	public function __construct(){}
+		echo "-session start<br>";
+		session_start();
+		echo "initialization of parse called <br>";
+
+		ParseClient::initialize( 'ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o' 
+								, 'b1qSJHLREpVGSWctgzaYFf2FBitfwgXE99B6un9B'
+								, 'uO1sGxKOAIL3hydGNW8NmLXKYxIeKrpPbLtuVbnH' );
+
+		$currentUser = ParseUser::getCurrentUser();
+		if ($currentUser) {
+		    // do stuff with the user
+		    echo "already loged in<br>";
+		    $login_status = TRUE;
+		} else {
+		    // show the signup or login page
+		    echo "not loged in";
+		}
+	}
 
 	private function get_signature(){
-
 		$apikey="api&user&Qkc0a6QqYvTPjOsYbhR7Sg==";
 		$date = date("Y-m-d\TH:i:s.000O");
 		$signature=hash_hmac("sha256", $date, $apikey);

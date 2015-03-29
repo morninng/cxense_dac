@@ -1,6 +1,5 @@
 @extends('parseauthlayout')
 
-
 @section('main_content')
 <div class="container-fluid">
 	<div class="row">

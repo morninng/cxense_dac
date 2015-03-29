@@ -14,13 +14,11 @@ use Parse\ParseAnalytics;
 use Parse\ParseFile;
 use Parse\ParseCloud;
 use Parse\ParseClient;
+use Parse\ParseSessionStorage;
 
 use Illuminate\Support\Facades\Redirect;
 
 class ParseauthController extends Controller {
-
-// use Laravel\Input\Request\Access\DataProvider;
-// use Laravel\Input\Request\Access\DataProvider\DogBreed;
 
 	/**
 	 * Create a new controller instance.
@@ -30,9 +28,15 @@ class ParseauthController extends Controller {
 	public function __construct()
 	{
 
-				ParseClient::initialize( 'ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o' 
+		echo "-session start<br>";
+		session_start();
+
+		echo "initialization of parse called <br>";
+
+		ParseClient::initialize( 'ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o' 
 								, 'b1qSJHLREpVGSWctgzaYFf2FBitfwgXE99B6un9B'
 								, 'uO1sGxKOAIL3hydGNW8NmLXKYxIeKrpPbLtuVbnH' );
+
 	//	$this->middleware('auth');
 	}
 	/**
@@ -60,6 +64,8 @@ class ParseauthController extends Controller {
 		if($password != $password){
 			array_push($errors, "password is not the same");
 		}
+		print_r($_SESSION);
+		ParseClient::setStorage( new ParseSessionStorage() );
 
 		if(count($errors)==0){
 			$user = new ParseUser();
@@ -90,20 +96,40 @@ class ParseauthController extends Controller {
 		$name = $_POST['name'];
 		$password = $_POST['password'];
 
+		print_r($_SESSION);echo "<br>";
+		var_dump($_SESSION);echo "<br>";
+		$storage = new ParseSessionStorage();
+		ParseClient::setStorage( $storage );
+
 		try {
 		  $user = ParseUser::logIn($name, $password);
-		  echo "login succeed";
-		  // Do stuff after successful login.
+		  echo "login succeed<br><br>";
 		} catch (ParseException $error) {
-		  // The login failed. Check error to see why.
 				  echo "Error: " . $error->getCode() . " " . $error->getMessage();
-		};		
+		};
 
+		$currentUser = ParseUser::getCurrentUser();
+		if($currentUser){
+			echo "current user set<br>";
+			$sessionToken = $currentUser->getSessionToken();
+			echo $sessionToken . "<br>";
+		}else{
+			echo "current user not set<br>";
+		}
+		print_r($_SESSION);echo "<br>";
+		var_dump($_SESSION);echo "<br>";
 	}
 
 	public function getLogout()
 	{
-
+		$currentUser = ParseUser::getCurrentUser();
+		if($currentUser){
+			echo "current user set";
+		}else{
+			echo "current user not set";
+		}
+		echo "<br><br>";
+		print_r($_SESSION);echo "<br>";
+		var_dump($_SESSION);echo "<br>";
 	}
-
 }
