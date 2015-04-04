@@ -10,11 +10,14 @@
 <script type="text/javascript">
 
 function CXENSE_fetch_context_request(){
+	
 	var request_url;
 	var persisted_url_content_fetch = 'https://api.cxense.com/profile/content/fetch?persisted=';
 	var persisted_id_content_fetch = "83fe6407b98582b8065bad01b0d94704187f6ca0";
 	var callback_content_fetch = '&callback=onGotContentFetch&media=json';
 	var content_fetch_query =  {"url":"http://www.dac.co.jp/irinfo/"};
+	console.log(content_fetch_query);
+	console.log(encodeURIComponent(cX.JSON.stringify(content_fetch_query)));
 	var request_url = persisted_url_content_fetch + persisted_id_content_fetch + '&json=' + encodeURIComponent(cX.JSON.stringify(content_fetch_query)) + callback_content_fetch;
 	console.log(request_url);
 

@@ -27,17 +27,11 @@ class ParseauthController extends Controller {
 
 	public function __construct()
 	{
-
-		echo "-session start<br>";
 		session_start();
-
-		echo "initialization of parse called <br>";
-
 		ParseClient::initialize( 'ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o' 
 								, 'b1qSJHLREpVGSWctgzaYFf2FBitfwgXE99B6un9B'
 								, 'uO1sGxKOAIL3hydGNW8NmLXKYxIeKrpPbLtuVbnH' );
 
-	//	$this->middleware('auth');
 	}
 	/**
 	 * Show the application dashboard to the user.
@@ -64,8 +58,7 @@ class ParseauthController extends Controller {
 		if($password != $password){
 			array_push($errors, "password is not the same");
 		}
-		print_r($_SESSION);
-		ParseClient::setStorage( new ParseSessionStorage() );
+		// print_r($_SESSION);
 
 		if(count($errors)==0){
 			$user = new ParseUser();
@@ -89,6 +82,32 @@ class ParseauthController extends Controller {
 	public function getLogin()
 	{
 		return View('parselogin');
+	}
+
+	public function editprofile()
+	{
+		$currentUser = ParseUser::getCurrentUser();
+		$user_name = $currentUser->get("username");
+		return View('parseeditprofile')
+				->with("user_name",$user_name);
+	}
+
+
+	public function post_editprofile()
+	{
+		$currentUser = ParseUser::getCurrentUser();
+		$currentUser->set("gender", $_POST['gender']);
+		$currentUser->set("age", $_POST['age']);
+		$currentUser->set("status", $_POST['status']);
+		try{
+			$currentUser->save();
+		} catch (ParseException $ex) { 
+			echo 'Failed to save profil, with error message: ' + $ex->getMessage();
+		}
+
+
+
+		return Redirect::to('/');
 	}
 
 	public function postLogin()
@@ -118,6 +137,9 @@ class ParseauthController extends Controller {
 		}
 		print_r($_SESSION);echo "<br>";
 		var_dump($_SESSION);echo "<br>";
+
+
+		return Redirect::to('/');
 	}
 
 	public function getLogout()
@@ -128,8 +150,12 @@ class ParseauthController extends Controller {
 		}else{
 			echo "current user not set";
 		}
-		echo "<br><br>";
+		echo "<br>";
 		print_r($_SESSION);echo "<br>";
-		var_dump($_SESSION);echo "<br>";
+
+		ParseUser::logOut();
+
+		return Redirect::to('/parselogin');
+
 	}
 }

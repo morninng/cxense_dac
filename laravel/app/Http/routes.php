@@ -16,14 +16,6 @@
 Route::get('/', 'WelcomeController@index');
 
 
-/*
-Route::get('/press/{article_id}', function($article_id)
-{
-	$press_id = $article_id;
-
-    return View::make("press")->with("press_id",$press_id);
-});
-*/
 Route::get('press/{article_year}/{article_context}', 'PressController@article');
 Route::get('press/', 'PressController@article_list');
 
@@ -49,11 +41,8 @@ Route::post('/parsesignin','ParseauthController@postSignin');
 // Route::post('/parsesignin',function(){return 'helloworld';});
 Route::get('/parselogout', 'ParseauthController@getLogout');
 
-Route::get('/registuser', function()
-{
-	return 'regist user info';
-});
-
+Route::get('/editprofile', 'ParseauthController@editprofile');
+Route::post('/editprofile', 'ParseauthController@post_editprofile');
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

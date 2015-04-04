@@ -24,12 +24,11 @@ class DachomeController extends Controller {
 	/**
 	 * @return void
 	 */
-	public $login_status = false;
+	public $login_status = 0;
+
 	public function __construct(){
 
-		echo "-session start<br>";
 		session_start();
-		echo "initialization of parse called <br>";
 
 		ParseClient::initialize( 'ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o' 
 								, 'b1qSJHLREpVGSWctgzaYFf2FBitfwgXE99B6un9B'
@@ -37,13 +36,11 @@ class DachomeController extends Controller {
 
 		$currentUser = ParseUser::getCurrentUser();
 		if ($currentUser) {
-		    // do stuff with the user
-		    echo "already loged in<br>";
-		    $login_status = TRUE;
+		    $this->login_status = 1;
 		} else {
-		    // show the signup or login page
-		    echo "not loged in";
+		    $this->login_status = 0;
 		}
+
 	}
 
 	private function get_signature(){
@@ -143,7 +140,7 @@ class DachomeController extends Controller {
 			$num_pv = 0;
 			$num_url = 0;
 			$this->cxense_dac_site_traffic_keywordfilter($concept_keyword, $num_pv, $num_url);
-			
+
 			array_push($site_concept_num_url_array, $num_url );
 			array_push($site_concept_num_pv_array, $num_pv );
 		}
@@ -153,6 +150,7 @@ class DachomeController extends Controller {
 				->with("article_context",$article_context_converted)
 				->with("site_concept_array",$site_concept_array)
 				->with("site_concept_num_url_array",$site_concept_num_url_array)
+				->with("login_status",$this->login_status)
 				->with("site_concept_num_pv_array",$site_concept_num_pv_array);
 
 	}

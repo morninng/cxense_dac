@@ -4,13 +4,13 @@
 	<meta charset="UTF-8">
 	<title>DAC cxense demo</title>
 
-	<link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/layout.css">
-	<link rel="stylesheet" href="/css/module.css">
-	<link rel="stylesheet" href="/css/home.css">
+		@include('common.homeheader')
 
 </head>
 <body id="home" class="line5">
+
+	@yield('header_area')
+
 	<div id="wrapper">
 		<div id="leftArea">
 				@yield('left_area_context')
@@ -28,6 +28,11 @@
 
 	</div>
 
+	<footer style="position: static;">
+		@include('common.footer')
+	</footer>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

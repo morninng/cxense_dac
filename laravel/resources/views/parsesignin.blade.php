@@ -19,7 +19,7 @@
 					@endif
 
 
-<form class="form-horizontal" action="/parselogin" method="post">
+<form class="form-horizontal" action="/parsesignin" method="post">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<div class="form-group">
 		<label class="col-md-4 control-label">Name</label>

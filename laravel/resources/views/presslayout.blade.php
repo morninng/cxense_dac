@@ -3,30 +3,36 @@
 <head>
 	<meta charset="UTF-8">
 	<title>DAC cxense demo</title>
-
-	<link rel="stylesheet" href="/css/reset.css">
-	<link rel="stylesheet" href="/css/layout.css">
-	<link rel="stylesheet" href="/css/module.css">
-
+	@include('common.header')
 </head>
 <body>
+	@yield('header_area')
+
 	<div id="wrapper">
 		<div id="mainArea">
 			<article>
-				@yield('title_context')
-				@yield('article_content')
-				<div id="kannrenn_kiji">
-					@yield('cxense_kannrenn');
+				<div>
+					@yield('title_context')
+					@yield('article_content')
 				</div>
 			</article>
+			<div id="kannrenn_kiji">
+				@yield('cxense_kannrenn')
+			</div>
 		</div>
 	@yield('leftbar_context')
 
 	</div>
-	<div id="side">
 
+	<div id="side">
 	</div>
 
+	<footer style="position: static;">
+		@include('common.footer')
+	</footer>
+
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
