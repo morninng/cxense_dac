@@ -99,15 +99,46 @@ class ParseauthController extends Controller {
 		$currentUser->set("gender", $_POST['gender']);
 		$currentUser->set("age", $_POST['age']);
 		$currentUser->set("status", $_POST['status']);
+
+		$currentUser_ID = $currentUser->getObjectId();
+
 		try{
 			$currentUser->save();
+			$this->setCxenseFirstpartyData($currentUser_ID, $_POST['gender'], $_POST['age'], $_POST['status'], $_POST['cxid']);
 		} catch (ParseException $ex) { 
 			echo 'Failed to save profil, with error message: ' + $ex->getMessage();
 		}
+		 return Redirect::to('/');
+	}
 
-
-
-		return Redirect::to('/');
+	public function setCxenseFirstpartyData($user_id, $gender, $age, $status)
+	{
+		$username="cxense-team@dac.co.jp";
+		$apikey="api&user&Qkc0a6QqYvTPjOsYbhR7Sg==";
+		$date = date("Y-m-d\TH:i:s.000O");
+		$signature=hash_hmac("sha256", $date, $apikey);
+		$url = 'https://api.cxense.com/profile/user/external/update';
+		$plainjson_payload = "{
+				\"id\":\"$user_id\",
+				\"type\":\"dac\",
+				\"profile\":[
+					{\"group\":\"dac-gender\",\"item\":\"$gender\"},
+					{\"group\":\"dac-age\",\"item\":\"$age\"},
+					{\"group\":\"dac-status\",\"item\":\"$status\"}
+					]
+				}";
+		echo $plainjson_payload;
+		$request_data = array(
+		    'http' => array(
+		        'header'  => "Content-Type: application/json; charset=UTF-8\r\n".
+		                     "X-cXense-Authentication: username=$username date=$date hmac-sha256-hex=$signature\r\n",
+		        'method'  => 'POST',
+		        'content' => $plainjson_payload,
+		    ),
+		);
+		$context  = stream_context_create($request_data);
+		$result = file_get_contents($url, false, $context);
+		$obj = json_decode($result);
 	}
 
 	public function postLogin()

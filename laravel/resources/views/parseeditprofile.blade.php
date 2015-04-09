@@ -23,6 +23,7 @@
 
 <form class="form-horizontal" action="/editprofile" method="post">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+	<input id="cxenseid_hiddenform" type="hidden" name="cxid">
 
 	<div class="form-group">
 		<label class="col-md-4 control-label">gender</label>
@@ -64,11 +65,19 @@
 
 </form>
 
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript" src="http://cdn.cxense.com/cx.js"></script>
+<script type="text/javascript">
+var cx_id = cX.getUserId()
+document.getElementById('cxenseid_hiddenform').value=cx_id;
+
+</script>
+
+
 @stop
 

@@ -84,7 +84,7 @@ class DachomeController extends Controller {
 		}
 		return $concept_array;
 	}
-
+/*
 	public function cxense_dac_site_traffic_keywordfilter($keyword, &$number_PV, &$number_url)
 	{
 		$signature = $this->get_signature();
@@ -116,7 +116,7 @@ class DachomeController extends Controller {
 
 		return;
 	}
-
+*/
 	/**
 	 * @return Response
 	 */
@@ -132,10 +132,13 @@ class DachomeController extends Controller {
 		$article_context_converted = str_replace("src=\"/", "src=\"http://www.dac.co.jp/", $article_context);
 
 		$site_concept_array = $this->cxense_dac_site_concept();
+
+/*		
 		$site_concept_num_url_array = array();
 		$site_concept_num_pv_array = array();
 		$side_context = "";
-		
+
+
 		foreach($site_concept_array as $concept_keyword){
 			$num_pv = 0;
 			$num_url = 0;
@@ -144,14 +147,12 @@ class DachomeController extends Controller {
 			array_push($site_concept_num_url_array, $num_url );
 			array_push($site_concept_num_pv_array, $num_pv );
 		}
+*/
 
 		return view('dachome')
 				->with("left_area_context",$leftbar_context_converted)
 				->with("article_context",$article_context_converted)
 				->with("site_concept_array",$site_concept_array)
-				->with("site_concept_num_url_array",$site_concept_num_url_array)
-				->with("login_status",$this->login_status)
-				->with("site_concept_num_pv_array",$site_concept_num_pv_array);
-
+				->with("login_status",$this->login_status);
 	}
 }

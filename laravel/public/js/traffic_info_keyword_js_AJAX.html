@@ -1,0 +1,94 @@
+<html>
+<head>
+
+<meta charset="utf-8">
+</head>
+<body>
+
+	<table id="trend_keyword_table">
+	<caption><center>トレンド</center></caption>
+	<tr><th>keyword</th><th>page数</th><th>pv</th></tr>
+	<span id="trend_keyword_link"></span>
+	<tr><td></td><td></td><td></td></tr>
+	</table>
+
+
+<script type="text/javascript" src="http://cdn.cxense.com/cx.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+
+var keyword_array = ["dac","広告","販売"];
+
+function retrieve_traffic_data()
+{
+	for(var i=0;i<keyword_array.length;i++){
+		CXENSE_traffic_fromKeyword(keyword_array[i]);
+	}
+}
+
+function CXENSE_traffic_fromKeyword(keyword){
+
+	var request_url;
+	var persisted_url_content_fetch = 'https://api.cxense.com/traffic?persisted=';
+	var persisted_id = "d40479dabd63c6745aac772fb9ead84c5d3879c8";
+	var callback_content_fetch = '&callback=onGotTrafficFromKeywordFetch&media=json';
+
+	this.counter=0;
+
+	var traffic_fromKeyword_query =  {"filters":[{ "type":"keyword","group":"concept","item":keyword }]};
+	request_url = persisted_url_content_fetch + persisted_id + '&json=' + encodeURIComponent(cX.JSON.stringify(traffic_fromKeyword_query)) + callback_content_fetch;
+	
+	$.ajax({
+		type: "GET",
+		url: request_url,
+		dataType: 'jsonp',
+		context : this,
+		async:true
+	})
+}
+
+function onGotTrafficFromKeywordFetch(data){
+
+	console.log("call back");
+	console.log(keyword_array[this.counter]);
+	var keyword = keyword_array[this.counter];
+	console.log(this.counter);
+	this.counter++;
+
+	var response = data.response;
+	var active_time = response.data.activeTime;
+	var pv_num = response.data.events;
+	var urls_num = response.data.urls;
+	console.log(active_time);
+	console.log(pv_num);
+	console.log(urls_num);
+
+	var dom_tr = $('<tr>');
+	var dom_td_keyword = $('<td>');
+	var dom_td_pv_num = $('<td>');
+	var dom_td_url_num = $('<td>');
+
+
+	dom_td_pv_num.text(pv_num);
+	dom_td_url_num.text(urls_num);
+
+	var dom_a = $('<a>');
+	dom_a.attr("href","/keyword_matome2/" + keyword);
+	dom_a.text(keyword);
+	dom_td_keyword.append(dom_a);
+
+	dom_tr.append(dom_td_keyword);
+	dom_tr.append(dom_td_pv_num);
+	dom_tr.append(dom_td_url_num);
+
+	$("#trend_keyword_table").append(dom_tr);
+}
+
+window.onload=retrieve_traffic_data;
+
+</script>
+
+</body>
+</html>
