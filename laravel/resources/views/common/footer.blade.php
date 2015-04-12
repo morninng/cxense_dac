@@ -1,10 +1,15 @@
+<!--
   <div class="footer">
     <div class="container">
       <center>vvvvvvvvvvvvvvvvv</center>
     </div>
   </div>
-
-
+-->
+<footer>
+    <div class="container">
+      <center>vvvvvvvvvvvvvvvvv</center>
+    </div>
+</footer>
 
   <!-- Cxense script begin -->
 <script type="text/javascript">
