@@ -1,9 +1,7 @@
 <?php 
-
 namespace App\Http\Controllers;
 
 //require_once 'Benchmark/Timer.php';
-
 
 define( 'PARSE_SDK_DIR', './../vendor/parse/php-sdk/src/Parse/' );
 require './../vendor/autoload.php';
@@ -21,7 +19,6 @@ use Parse\ParseCloud;
 use Parse\ParseClient;
 use Parse\ParseSessionStorage;
 
-
 include(app_path().'/Http/Controllers/simple_html_dom.php');
 
 class DachomeController extends Controller {
@@ -36,17 +33,12 @@ class DachomeController extends Controller {
 		ParseClient::initialize( 'ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o' 
 								, 'b1qSJHLREpVGSWctgzaYFf2FBitfwgXE99B6un9B'
 								, 'uO1sGxKOAIL3hydGNW8NmLXKYxIeKrpPbLtuVbnH' );
-
-
 		$currentUser = ParseUser::getCurrentUser();
 		if ($currentUser) {
 		    $this->login_status = 1;
 		} else {
 		    $this->login_status = 0;
 		}
-
-
-
 	}
 
 	private function get_signature(){
@@ -95,37 +87,26 @@ class DachomeController extends Controller {
 	 */
 	public function index()
 	{
-
-
 //$timer2 = new \Benchmark_Timer(TRUE);
 //$timer2->setMarker('parse init start');
 
 		$domain_home = "http://www.dac.co.jp/";
 		$html_context = file_get_html($domain_home);
-
 //$timer2->setMarker('html context get');
 
 		$leftbar_context = $html_context->find('div[id=leftArea]')[0];
 		$leftbar_context_converted = str_replace("src=\"/", "src=\"http://www.dac.co.jp/", $leftbar_context);
 
-
 		$article_context = $html_context->find('article')[0];
 		$article_context_converted = str_replace("src=\"/", "src=\"http://www.dac.co.jp/", $article_context);
-
-
 		$site_concept_array = $this->cxense_dac_site_concept();
-
 //$timer2->setMarker('cxense site concept done');
 //$timer2->stop();
 //$timer2->display();
-
 		return view('dachome')
 				->with("left_area_context",$leftbar_context_converted)
 				->with("article_context",$article_context_converted)
 				->with("site_concept_array",$site_concept_array)
 				->with("login_status",$this->login_status);
 	}
-
-
-
 }

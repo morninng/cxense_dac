@@ -5,10 +5,7 @@ Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
 
-
-
-
-Parse.Cloud.define("cxense_traffic", function(request, response) {
+Parse.Cloud.define("cxense_traffic1", function(request, response) {
 
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
@@ -39,7 +36,7 @@ Parse.Cloud.define("cxense_traffic", function(request, response) {
 
 
 
-Parse.Cloud.define("cxense_traffic_keywordfilter", function(request, response) {
+Parse.Cloud.define("cxense_traffic2", function(request, response) {
 
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
@@ -74,3 +71,50 @@ Parse.Cloud.define("cxense_traffic_keywordfilter", function(request, response) {
 	});
 
 });
+
+
+
+
+Parse.Cloud.define("cxense_traffic_keywordfilter", function(request, response) {
+	var  crypto = require('crypto');
+	var username = 'cxense-team@dac.co.jp';
+	var apiKey = 'api&user&Qkc0a6QqYvTPjOsYbhR7Sg==';
+	var date = new Date().toISOString();
+	var hmac = crypto.createHmac('sha256', apiKey).update(date).digest('hex');
+
+	Parse.Cloud.httpRequest({
+	  method: 'post',
+	  url: 'https://api.cxense.com/traffic/keyword',
+	  headers: { 
+	  	'X-cXense-Authentication': 'username=' + username + ' date=' + date + ' hmac-sha256-hex=' + hmac,
+	  	'Content-Type': 'application/json;charset=utf-8'
+	  },
+	  body: { 
+	  	start: -86400, 
+	  	siteId: '1128275557251903601',
+	  	historyResolution: 'minute',
+	  },
+	  success: function(httpResponse) {
+	     //response.success(httpResponse.text);
+	     var data_obj = JSON.parse(httpResponse.text);
+	     var groups_array = data_obj.groups;
+	     var concept_item = new Array();
+	     var concept_items = new Array();
+	     for(var i=0; i<groups_array.length; i++ ){
+	     	if(groups_array[i].group == "concept"){
+	     		concept_items = groups_array[i].items;
+	     		for(var j=0; j<concept_items.length; j++){
+	     			concept_item.push(concept_items[j].item);
+	     		}
+	     	}
+	     }
+	     response.success(concept_item);
+
+	  },
+	  error: function(httpResponse) {
+	    response.error('Request failed with response code ' + httpResponse.status);
+	  }
+	});
+});
+
+
