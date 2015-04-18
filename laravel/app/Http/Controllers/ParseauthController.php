@@ -69,7 +69,7 @@ class ParseauthController extends Controller {
 			  $user->signUp();
 			  // Hooray! Let them use the app now.
 				echo "user info is registered on parse.com";
-				return Redirect::to('/registuser');
+				return Redirect::to('/editprofile');
 
 			} catch (ParseException $ex) {
 			  // Show the error message somewhere and let the user try again.
@@ -88,7 +88,14 @@ class ParseauthController extends Controller {
 	{
 		$currentUser = ParseUser::getCurrentUser();
 		$user_name = $currentUser->get("username");
+//		var_dump( $currentUser);
+//		echo("<br><br>");
+
+		$user_id = $currentUser->getObjectId();
+//		echo ($user_id);
+
 		return View('parseeditprofile')
+				->with("user_id",$user_id)
 				->with("user_name",$user_name);
 	}
 
@@ -105,6 +112,7 @@ class ParseauthController extends Controller {
 		try{
 			$currentUser->save();
 			$this->setCxenseFirstpartyData($currentUser_ID, $_POST['gender'], $_POST['age'], $_POST['status'], $_POST['cxid']);
+			
 		} catch (ParseException $ex) { 
 			echo 'Failed to save profil, with error message: ' + $ex->getMessage();
 		}
@@ -170,7 +178,7 @@ class ParseauthController extends Controller {
 		var_dump($_SESSION);echo "<br>";
 
 
-		return Redirect::to('/');
+		return Redirect::to('/editprofile');
 	}
 
 	public function getLogout()
