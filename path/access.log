@@ -2709,3 +2709,7 @@
 127.0.0.1 - - [18/Apr/2015:19:05:05 +0900] "GET /cxense_traffic_keywordfilter.php HTTP/1.1" 200 377 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
 127.0.0.1 - - [18/Apr/2015:19:06:10 +0900] "GET /cxense_traffic_keywordfilter.php HTTP/1.1" 200 269 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
 127.0.0.1 - - [18/Apr/2015:19:56:11 +0900] "GET /cxense_traffic_keywordfilter_min.php HTTP/1.1" 200 269 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
+127.0.0.1 - - [18/Apr/2015:22:31:14 +0900] "GET / HTTP/1.1" 200 16050 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
+127.0.0.1 - - [18/Apr/2015:22:31:14 +0900] "GET /css/layout.css HTTP/1.1" 304 0 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
+127.0.0.1 - - [19/Apr/2015:01:54:53 +0900] "GET / HTTP/1.1" 200 16050 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
+127.0.0.1 - - [19/Apr/2015:01:54:53 +0900] "GET /css/layout.css HTTP/1.1" 304 0 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.101 Safari/537.36"
