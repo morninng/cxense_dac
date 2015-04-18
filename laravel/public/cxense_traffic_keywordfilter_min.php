@@ -12,8 +12,7 @@ $url = 'https://api.cxense.com/traffic';
 
 $plainjson_payload = "{\"siteId\":\"1128275557251903601\",
                        \"start\":\"-86400\", 
-                       \"fields\":[\"events\",\"urls\",\"activeTime\"],
-                       \"filters\":[{\"type\":\"keyword\",\"group\":\"concept\", \"item\":\"$keyword\"}]
+                       \"fields\":[\"events\",\"urls\",\"activeTime\"]
                    }";
 //echo($plainjson_payload);
 

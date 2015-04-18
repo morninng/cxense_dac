@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "CXENSE_DEMO": {
+            "applicationId": "ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o", 
+            "masterKey": "uO1sGxKOAIL3hydGNW8NmLXKYxIeKrpPbLtuVbnH"
+        }, 
+        "_default": {
+            "link": "CXENSE_DEMO"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.4.2"
+    }
+}

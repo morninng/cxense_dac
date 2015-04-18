@@ -1,0 +1,2 @@
+curl -X POST   -H "X-Parse-Application-Id: ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o"   -H "X-Parse-REST-API-Key: b1qSJHLREpVGSWctgzaYFf2FBitfwgXE99B6un9B"   -H "Content-Type: application/json"   -d '{}'   https://api.parse.com/1/functions/cxense_traffic_keywordfilter
+
