@@ -1,4 +1,6 @@
 
+
+
 // Use Parse.Cloud.define to define as many cloud functions as you want.
 // For example:
 Parse.Cloud.define("hello", function(request, response) {
@@ -116,3 +118,77 @@ Parse.Cloud.define("cxense_traffic_keywordfilter", function(request, response) {
 	  }
 	});
 });
+
+
+
+Parse.Cloud.define("traffic_filter", function(request, response) {
+	var  crypto = require('crypto');
+	var username = 'cxense-team@dac.co.jp';
+	var apiKey = 'api&user&Qkc0a6QqYvTPjOsYbhR7Sg==';
+	var date = new Date().toISOString();
+	var hmac = crypto.createHmac('sha256', apiKey).update(date).digest('hex');
+	var fields_array = ["events","urls","activeTime"];
+	var filter2 = { "type":"keyword","group":"site","item":"dac.co.jp"};
+	var filters_array = new Array(filter2);
+
+	Parse.Cloud.httpRequest({
+	  method: 'POST',
+	  url: 'https://api.cxense.com/traffic',
+	  headers: {
+	  	'X-cXense-Authentication': 'username=' + username + ' date=' + date + ' hmac-sha256-hex=' + hmac,
+	  	'Content-Type': 'application/json;charset=utf-8'
+	  },
+	  body: { 
+	  	siteId: '1128275557251903601',
+	  	start: -864000,
+	  	fields: fields_array,
+	  	filters: filters_array
+	  },
+	  success: function(httpResponse) {
+	  	response.success(httpResponse.text);
+	  },
+	  error: function(httpResponse) {
+	  	response.error(httpResponse.text);
+	  }
+	});
+});
+
+
+
+
+
+Parse.Cloud.define("traffic_keyword", function(request, response) {
+	var  crypto = require('crypto');
+	var username = 'cxense-team@dac.co.jp';
+	var apiKey = 'api&user&Qkc0a6QqYvTPjOsYbhR7Sg==';
+	var date = new Date().toISOString();
+	var hmac = crypto.createHmac('sha256', apiKey).update(date).digest('hex');
+
+	var groups_array = ["concept"];
+	var filter = { "type":"keyword","group":"pageclass","item":"article"};
+	var filters_array = [filter];
+
+	Parse.Cloud.httpRequest({
+	  method: 'POST',
+	  url: 'https://api.cxense.com/traffic/keyword',
+	  headers: {
+	  	'X-cXense-Authentication': 'username=' + username + ' date=' + date + ' hmac-sha256-hex=' + hmac,
+	  	'Content-Type': 'application/json;charset=utf-8'
+	  },
+	  body: { 
+	  	siteId: '1128275557251903601',
+	  	start: -864000,
+	  	groups: groups_array,
+	 // 	filters: filters_array
+	  },
+	  success: function(httpResponse) {
+	  	response.success(httpResponse.text);
+	  },
+	  error: function(httpResponse) {
+	  	response.error(httpResponse.text);
+	  }
+	});
+});
+
+
+
