@@ -190,6 +190,7 @@ Parse.Cloud.define("traffic_keyword", function(request, response) {
 
 
 Parse.Cloud.define("profile_content_fetch", function(request, response) {
+
     console.log("profile_content_fetch");
 
 	var  crypto = require('crypto');
@@ -213,20 +214,17 @@ Parse.Cloud.define("profile_content_fetch", function(request, response) {
 	  success: function(httpResponse) {
 
 		var data_obj = JSON.parse(httpResponse.text);
-		console.log(data_obj);
 		var site_url = data_obj.url;
 		var site_title = data_obj.title;
 		var image_height = 0;
 		var image_width = 0;
 		var image_url = "";
 
-		//var profile_content_array = new Array(data_obj);
+		var profile_content_array = new Array(data_obj);
 		
-		//for(var m=0; m<profile_content_array.length; m++){
-			//var thumbnail_array = profile_content_array[m].thumbnails;
-
-			var thumbnail_array = data_obj.thumbnails;
-			console.log("thumbnail array" + thumbnail_array);
+		for(var m=0; m<profile_content_array.length; m++){
+			var thumbnail_array = profile_content_array[m].thumbnails;
+			console.log("thumbnail 2" + thumbnail_array);
 			
 			for(var l=0; l<thumbnail_array.length; l++){
 				console.log(thumbnail_array[l]);
@@ -239,7 +237,7 @@ Parse.Cloud.define("profile_content_fetch", function(request, response) {
 					console.log(thumbnail_array[l].url);
 				}
 			}
-		//}
+		}
 	  },
 
 	  error: function(httpResponse) {
