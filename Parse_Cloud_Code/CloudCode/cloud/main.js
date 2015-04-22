@@ -1,8 +1,8 @@
 require('cloud/test.js');
 
-
 Parse.Cloud.define("cxense_dac_home", function(request, response) {
 
+	console.log("------cxense_dac_home start--------------");
 	console.log("------cxense_dac_home start--------------");
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
@@ -42,9 +42,9 @@ Parse.Cloud.define("cxense_dac_home", function(request, response) {
 	     	}
 	     }
 	     var i=0;
-	    for(i=0;i<concept_item.length; i++){
+	//    for(i=0;i<concept_item.length; i++){
 	     	Save_TrafficInfo_OnParse(concept_item[i],i,concept_item.length, response);
-	     }
+	//     }
 	  },
 	  error: function(httpResponse) {
 	    //response.error('Request failed with response code ' + httpResponse.status);
@@ -115,7 +115,7 @@ function Save_TrafficInfo_OnParse(str_concept, n,nn, response){
 
 function RetrieveURL_list(site_concept_parse_id, str_concept, response){
 
-	console.log("RetrieveURL_list---------" + str_concept);
+//	console.log("RetrieveURL_list---------" + str_concept);
 
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
@@ -159,7 +159,7 @@ function RetrieveURL_list(site_concept_parse_id, str_concept, response){
 	     		}
 	     	}
 	     }
-	     console.log("url_array is" + URL_item_array);
+	    // console.log("url_array is" + URL_item_array);
 	     for(var k=0; k<URL_item_array.length; k++ ){
 			 Save_EachPageInfo_OnParse(URL_item_array[k],str_concept,site_concept_parse_id);
 		 }
@@ -174,7 +174,7 @@ function RetrieveURL_list(site_concept_parse_id, str_concept, response){
 
 function Save_EachPageInfo_OnParse(in_url, str_concept, parse_site_concept_id ){
 
-	console.log("save each page info  " + in_url);
+//	console.log("save each page info  " + in_url);
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
 	var apiKey = 'api&user&Qkc0a6QqYvTPjOsYbhR7Sg==';
@@ -220,7 +220,7 @@ function Save_EachPageInfo_OnParse(in_url, str_concept, parse_site_concept_id ){
 		}
 		site_profile.save().then(function(obj) {
 
-			console.log("profile context save succeed");
+		//	console.log("profile context save succeed");
 			var SiteConcept = Parse.Object.extend("SiteConcept");
 			var siteconcept_query = new Parse.Query(SiteConcept);
 		
@@ -231,9 +231,9 @@ function Save_EachPageInfo_OnParse(in_url, str_concept, parse_site_concept_id ){
 
 			return site_concept_obj.save();
 		}).then(function(){
-			console.log("succeed");
+		//	console.log("succeed");
 		}),function(error){
-			console.log(error);
+			console.log("site profile save fail or adding child on site conceptfail" + error);
 		};
 	  },
 	  error: function(httpResponse) {
@@ -243,5 +243,67 @@ function Save_EachPageInfo_OnParse(in_url, str_concept, parse_site_concept_id ){
 	});
 }
 
+
+Parse.Cloud.afterSave("SiteConcept", function(request) {
+
+  console.log("-----------site concept after save---------");
+  var update_time = request.object.updatedAt;
+//  console.log("update time of site concept saved: " + update_time);
+
+  var year = update_time.getFullYear();
+  var month = update_time.getMonth();
+  var date = update_time.getDate();
+  var hour = update_time.getHours();
+  var minutes = update_time.getMinutes();
+  var num_minute_before = minutes-1;
+  var second = update_time.getSeconds();
+
+  var one_minu_before = new Date(year,month,date,hour,num_minute_before,second);
+
+ var SiteConcept = Parse.Object.extend("SiteConcept");
+ var query = new Parse.Query(SiteConcept);
+ query.find({
+ 	success: function(results){
+		for (var i = 0; i < results.length; i++) {
+			var site_concept_object = results[i];
+			console.log("site concept object id in the roop is" + site_concept_object.id);
+
+			if(site_concept_object.updatedAt < one_minu_before){
+				var site_profile_list = site_concept_object.get("child");
+				console.log("site concept id to be destroyed is " + site_concept_object.id);
+				for(var i=0; i<site_profile_list.length; i++ ){
+					var site_profile_id = site_profile_list[i].id;
+
+					var SiteProfile = Parse.Object.extend("SiteProfile");
+					var site_profile_query = new Parse.Query(SiteProfile); 
+					console.log("site profile id to be destroyed is " + site_profile_id);
+					site_profile_query.get(site_profile_id, {
+						success: function(site_profile_obj){
+							site_profile_obj.destroy().then(function(profile_obj){
+								console.log("site profile destroyed: id is " + profile_obj.id);
+								site_concept_object.destroy().then(function(concept_obj){
+									console.log("site concept has been destroyed: id is " + concept_obj.id);
+								},function(error){
+									console.log("it might be already destroyed: id is " + site_concept_object.id + error);
+								});
+							}, function(error){
+								console.log(error);
+							});
+						},
+						error: function(object, error){
+							console.log("site profile query fail" + error);
+						}
+					});
+				}
+			}else{
+				console.log("after" + site_concept_object.updatedAt);
+			}
+		}
+ 	},
+ 	error: function(error){
+ 		console.log("query find fail" +error);
+ 	}
+ });
+});
 
 
