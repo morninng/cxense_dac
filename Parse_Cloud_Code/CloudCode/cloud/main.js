@@ -11,8 +11,8 @@ Parse.Cloud.define("cxense_dac_home", function(request, response) {
 	var hmac = crypto.createHmac('sha256', apiKey).update(date).digest('hex');
 
 	var groups_array = ["concept"];
-	var filter = { "type":"keyword","group":"pageclass","item":"article"};
-	var filters_array = [filter];
+//	var filter = { "type":"keyword","group":"pageclass","item":"article"};
+//	var filters_array = [filter];
 
 	Parse.Cloud.httpRequest({
 	  method: 'post',
@@ -42,9 +42,9 @@ Parse.Cloud.define("cxense_dac_home", function(request, response) {
 	     	}
 	     }
 	     var i=0;
-	//    for(i=0;i<concept_item.length; i++){
+	     for(i=0;i<concept_item.length; i++){
 	     	Save_TrafficInfo_OnParse(concept_item[i],i,concept_item.length, response);
-	//     }
+	     }
 	  },
 	  error: function(httpResponse) {
 	    //response.error('Request failed with response code ' + httpResponse.status);
@@ -257,53 +257,65 @@ Parse.Cloud.afterSave("SiteConcept", function(request) {
   var minutes = update_time.getMinutes();
   var num_minute_before = minutes-1;
   var second = update_time.getSeconds();
+  var num_second_before = second-20;
 
-  var one_minu_before = new Date(year,month,date,hour,num_minute_before,second);
+  var one_minu_before = new Date(year,month,date,hour,minutes,num_second_before);
+
+
+ var destroy_site_concept_list = new Array();
+ var destroy_site_profile_list = new Array();
 
  var SiteConcept = Parse.Object.extend("SiteConcept");
- var query = new Parse.Query(SiteConcept);
- query.find({
- 	success: function(results){
-		for (var i = 0; i < results.length; i++) {
-			var site_concept_object = results[i];
-			console.log("site concept object id in the roop is" + site_concept_object.id);
+ var siteconcept_query = new Parse.Query(SiteConcept);
+ siteconcept_query.find({
+  success: function(results){
+    for (var i = 0; i < results.length; i++) {
+      var site_concept_object = results[i];
+      if(site_concept_object.updatedAt < one_minu_before){
+        destroy_site_concept_list.push(site_concept_object);
+        site_profile_list = site_concept_object.get("child");
+        for(var j=0; j < site_profile_list.length; j++ ){
+          destroy_site_profile_list.push(site_profile_list[j])
+        }
+      }
+    }
+    for(var k=0; k< destroy_site_profile_list.length; k++){
+        var SiteProfile = Parse.Object.extend("SiteProfile");
+        var site_profile_query = new Parse.Query(SiteProfile); 
+        console.log("site profile to be destroyed" + destroy_site_profile_list[k].id);
+        site_profile_query.get(destroy_site_profile_list[k].id, {
+          success: function(site_profile_obj){
+            site_profile_obj.destroy().then(function(profile_obj){
+              console.log(profile_obj.id + " profile obj has been destroyed")
+            },function(error){
+              console.log("profile obj destroy failed");
+            });
+          },error: function(obj,error){
+            console.log("profile get fail" + error);
+          }
+        });
+    }
 
-			if(site_concept_object.updatedAt < one_minu_before){
-				var site_profile_list = site_concept_object.get("child");
-				console.log("site concept id to be destroyed is " + site_concept_object.id);
-				for(var i=0; i<site_profile_list.length; i++ ){
-					var site_profile_id = site_profile_list[i].id;
-
-					var SiteProfile = Parse.Object.extend("SiteProfile");
-					var site_profile_query = new Parse.Query(SiteProfile); 
-					console.log("site profile id to be destroyed is " + site_profile_id);
-					site_profile_query.get(site_profile_id, {
-						success: function(site_profile_obj){
-							site_profile_obj.destroy().then(function(profile_obj){
-								console.log("site profile destroyed: id is " + profile_obj.id);
-								site_concept_object.destroy().then(function(concept_obj){
-									console.log("site concept has been destroyed: id is " + concept_obj.id);
-								},function(error){
-									console.log("it might be already destroyed: id is " + site_concept_object.id + error);
-								});
-							}, function(error){
-								console.log(error);
-							});
-						},
-						error: function(object, error){
-							console.log("site profile query fail" + error);
-						}
-					});
-				}
-			}else{
-				console.log("after" + site_concept_object.updatedAt);
-			}
-		}
- 	},
- 	error: function(error){
- 		console.log("query find fail" +error);
- 	}
+    for(var k=0; k< destroy_site_concept_list.length; k++){
+        var SiteConcept = Parse.Object.extend("SiteConcept");
+        var site_concept_query = new Parse.Query(SiteConcept);
+        console.log("site concept to be destroyed is " + destroy_site_concept_list[k].id); 
+        site_concept_query.get(destroy_site_concept_list[k].id, {
+          success: function(site_concept_obj){
+            site_concept_obj.destroy().then(function(concept_obj){
+              console.log(concept_obj.id + " profile obj has been destroyed")
+            },function(error){
+              console.log("profile obj destroy failed");
+            });
+          },error: function(obj,error){
+            console.log("profile get fail" + error);
+          }
+        });
+    }
+  },
+  error: function(error){
+    console.log("SiteConcept query find fail" +error);
+  }
  });
 });
-
 
