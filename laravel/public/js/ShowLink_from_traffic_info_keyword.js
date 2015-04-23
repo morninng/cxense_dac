@@ -63,6 +63,4 @@ function onGotTrafficFromKeywordFetch(data){
 	dom_tr.append(dom_td_url_num);
 
 	$("#trend_keyword_table").append(dom_tr);
-
-
 }

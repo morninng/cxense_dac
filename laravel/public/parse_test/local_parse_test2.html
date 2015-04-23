@@ -1,0 +1,92 @@
+
+<html>
+<head>
+
+<script src="http://www.parsecdn.com/js/parse-1.4.2.min.js"></script>
+<script type="text/javascript">
+
+function after_save(){
+
+ Parse.initialize("ErYnBqEmLR7KbYBSUUwN8LmFgqNY1TpxpCajNP9o", "xzNZRy8xJsxKda2snnLcx9xsAo49DQrKnbIQ7CPH");
+  console.log("-----------site concept after save---------");
+  var update_time = new Date();
+//  console.log("update time of site concept saved: " + update_time);
+
+  var year = update_time.getFullYear();
+  var month = update_time.getMonth();
+  var date = update_time.getDate();
+  var hour = update_time.getHours();
+  var minutes = update_time.getMinutes();
+  var num_minute_before = minutes-1;
+  var second = update_time.getSeconds();
+  var num_second_before = second-20;
+
+  var one_minu_before = new Date(year,month,date,hour,minutes,num_second_before);
+
+  var destroy_site_concept_list = new Array();
+  var destroy_site_profile_list = new Array();
+
+
+ var SiteConcept = Parse.Object.extend("SiteConcept");
+ var siteconcept_query = new Parse.Query(SiteConcept);
+ siteconcept_query.find({
+  success: function(results){
+    for (var i = 0; i < results.length; i++) {
+      var site_concept_object = results[i];
+      if(site_concept_object.updatedAt < one_minu_before){
+        destroy_site_concept_list.push(site_concept_object);
+        site_profile_list = site_concept_object.get("child");
+        for(var j=0; j < site_profile_list.length; j++ ){
+          destroy_site_profile_list.push(site_profile_list[j])
+        }
+      }
+    }
+    for(var k=0; k< destroy_site_profile_list.length; k++){
+        var SiteProfile = Parse.Object.extend("SiteProfile");
+        var site_profile_query = new Parse.Query(SiteProfile); 
+        console.log("site profile to be destroyed" + destroy_site_profile_list[k].id);
+        site_profile_query.get(destroy_site_profile_list[k].id, {
+          success: function(site_profile_obj){
+            site_profile_obj.destroy().then(function(profile_obj){
+              console.log(profile_obj.id + " profile obj has been destroyed")
+            },function(error){
+              console.log("profile obj destroy failed");
+            });
+          },error: function(obj,error){
+            console.log("profile get fail" + error);
+          }
+        });
+    }
+
+    for(var k=0; k< destroy_site_concept_list.length; k++){
+        var SiteConcept = Parse.Object.extend("SiteConcept");
+        var site_concept_query = new Parse.Query(SiteConcept);
+        console.log("site concept to be destroyed is " + destroy_site_concept_list[k].id); 
+        site_concept_query.get(destroy_site_concept_list[k].id, {
+          success: function(site_concept_obj){
+            site_concept_obj.destroy().then(function(concept_obj){
+              console.log(concept_obj.id + " profile obj has been destroyed")
+            },function(error){
+              console.log("profile obj destroy failed");
+            });
+          },error: function(obj,error){
+            console.log("profile get fail" + error);
+          }
+        });
+    }
+  },
+  error: function(error){
+    console.log("SiteConcept query find fail" +error);
+  }
+ });
+}
+
+</script>
+
+</head>
+<body>
+
+<p><input type="button" value="delete obj start same as after save" onClick="after_save()"></p>
+
+</body>
+</html>

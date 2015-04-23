@@ -31,6 +31,7 @@
 		</div>
 	</nav>
 
+	<script src="//www.parsecdn.com/js/parse-1.4.2.min.js"></script>
 
 
 @stop
@@ -51,18 +52,9 @@
 	</style>
 	<table id="trend_keyword_table">
 	<caption><center>トレンド</center></caption>
-	<tr><th>keyword</th><th>page数</th><th>&nbsp;pv&nbsp;</th></tr>
+	<tr><th>keyword</th><th>&nbsp;pv&nbsp;</th></tr>
 	</table>
-
-    <script type="text/javascript">
-    var site_concept_array = [];
-    <?php
-        foreach($site_concept_array as  $site_concept ){
-            print("site_concept_array.push('" . $site_concept . "');");
-        }
-    ?>
-    </script>
-    <script src="/js/ShowLink_from_traffic_info_keyword.js"></script>
+    <script src="/js/ShowLink_from_traffic_info_Parse.js"></script>
 
 
 @stop
