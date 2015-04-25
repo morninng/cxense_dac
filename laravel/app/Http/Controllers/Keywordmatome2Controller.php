@@ -42,24 +42,23 @@ class Keywordmatome2Controller extends Controller {
 	/**
 	 * @return Response
 	 */
-	public function index($keyword)
+	public function index()
 	{
 		$domain_press = "http://www.dac.co.jp/press";
 		$html_context = file_get_html($domain_press);
 		$title_context = "<h1 class='pageTitle'>トレンドキーワード別の人気ページ</h1>";
-		$article_context = $keyword;
+	//	$article_context = $keyword;
 
 		$leftbar_context = $html_context->find('div[id=leftArea]')[0];
 		$leftbar_context_converted = str_replace("src=\"/", "src=\"http://www.dac.co.jp/", $leftbar_context);
 
-		$url_array = $this->traffic_event($keyword);
+	//	$url_array = $this->traffic_event($keyword);
 
 		return view('keywordmatome2')
 				->with("title_context",$title_context)
-				->with("article_context",$article_context)
+			//	->with("article_context",$article_context)
 				->with("login_status",$this->login_status)
-				->with("leftbar_context",$leftbar_context_converted)
-				->with("url_array",$url_array);
+				->with("leftbar_context",$leftbar_context_converted);
 	}
 
 	private function traffic_event($keyword)

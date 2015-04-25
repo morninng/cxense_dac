@@ -32,7 +32,7 @@ Route::get('parsepractice', 'ParseController@index');
 Route::get('parseretrieve', 'ParseController@retrieve_object');
 
 Route::get('keyword_matome/{keyword}', 'KeywordmatomeController@index');
-Route::get('keyword_matome2/{keyword}', 'Keywordmatome2Controller@index');
+Route::get('keyword_matome2', 'Keywordmatome2Controller@index');
 
 Route::get('/parselogin','ParseauthController@getLogin');
 Route::post('/parselogin','ParseauthController@postLogin');
