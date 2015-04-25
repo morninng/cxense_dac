@@ -1,15 +1,6 @@
 require('cloud/test.js');
 
-
-Parse.Cloud.job("cxense_dac_home_background", function(request, status) {
-	dac_home(request, response);
-}); 
-
 Parse.Cloud.define("cxense_dac_home", function(request, response) {
-	dac_home(request, response);
-});
-
-function dac_home(request, response){
 
 	console.log("------cxense_dac_home start--------------");
 	console.log("------cxense_dac_home start--------------");
@@ -60,7 +51,7 @@ function dac_home(request, response){
 	    console.log('Request failed with response code ' + httpResponse.status);
 	  }
 	});
-}
+});
 
 //{"siteId":"1128275557251903601","start":"-86400",
 //"fields":["events","urls","activeTime"],
@@ -122,8 +113,9 @@ function Save_TrafficInfo_OnParse(str_concept, n,nn, response){
 	});
 }
 
-
 function RetrieveURL_list(site_concept_parse_id, str_concept, response){
+
+//	console.log("RetrieveURL_list---------" + str_concept);
 
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
@@ -134,7 +126,7 @@ function RetrieveURL_list(site_concept_parse_id, str_concept, response){
 	var filter1 = { "type":"keyword","group":"concept","item":str_concept};
 	var filter2 = { "type":"keyword","group":"site","item":"dac.co.jp"};
 //	var filter3 = { "type":"keyword","group":"pageclass","item":"article"};
-	var filters_array = [filter1,filter2/*, filter3 */];
+	var filters_array = [filter1,filter2 /*,filter3 */];
 
 	Parse.Cloud.httpRequest({
 	  method: 'POST',
@@ -153,6 +145,8 @@ function RetrieveURL_list(site_concept_parse_id, str_concept, response){
 	  },
 	  success: function(httpResponse) {
 	  	console.log("str concept is " + str_concept + "url list is" + httpResponse.text);
+	// 	response.success(httpResponse.text);
+
 	     var data_obj = JSON.parse(httpResponse.text);
 	     var groups_array = data_obj.groups;
 	     var URL_item_array = new Array();
@@ -250,12 +244,11 @@ function Save_EachPageInfo_OnParse(in_url, str_concept, parse_site_concept_id ){
 }
 
 
-
 Parse.Cloud.afterSave("SiteConcept", function(request) {
 
   console.log("-----------site concept after save---------");
   var update_time = request.object.updatedAt;
-  console.log("update time of site concept saved: " + update_time);
+//  console.log("update time of site concept saved: " + update_time);
 
   var year = update_time.getFullYear();
   var month = update_time.getMonth();
@@ -264,37 +257,28 @@ Parse.Cloud.afterSave("SiteConcept", function(request) {
   var minutes = update_time.getMinutes();
   var num_minute_before = minutes-1;
   var second = update_time.getSeconds();
-  var num_second_before = second;
+  var num_second_before = second-20;
 
-  var one_minu_before = new Date(year,month,date,hour,num_minute_before,second);
+  var one_minu_before = new Date(year,month,date,hour,minutes,num_second_before);
 
 
+ var destroy_site_concept_list = new Array();
+ var destroy_site_profile_list = new Array();
 
  var SiteConcept = Parse.Object.extend("SiteConcept");
  var siteconcept_query = new Parse.Query(SiteConcept);
  siteconcept_query.find({
   success: function(results){
-
- 	var destroy_site_concept_list = new Array();
- 	var destroy_site_profile_list = new Array();
-
     for (var i = 0; i < results.length; i++) {
       var site_concept_object = results[i];
       if(site_concept_object.updatedAt < one_minu_before){
         destroy_site_concept_list.push(site_concept_object);
         site_profile_list = site_concept_object.get("child");
-     //   console.log("site profile list" + site_profile_list);
-        if(site_profile_list){
-	        for(var j=0; j < site_profile_list.length; j++ ){
-    	      destroy_site_profile_list.push(site_profile_list[j])
-        	}
+        for(var j=0; j < site_profile_list.length; j++ ){
+          destroy_site_profile_list.push(site_profile_list[j])
         }
-    //  	console.log("before + " + site_concept_object.id + " - " +  site_concept_object.updatedAt);
-      }else{
-   //   	console.log("after + " + site_concept_object.id + " - " +  site_concept_object.updatedAt);
       }
     }
-
     for(var k=0; k< destroy_site_profile_list.length; k++){
         var SiteProfile = Parse.Object.extend("SiteProfile");
         var site_profile_query = new Parse.Query(SiteProfile); 
@@ -304,10 +288,10 @@ Parse.Cloud.afterSave("SiteConcept", function(request) {
             site_profile_obj.destroy().then(function(profile_obj){
               console.log(profile_obj.id + " profile obj has been destroyed")
             },function(error){
-            //  console.log("profile obj destroy failed");
+              console.log("profile obj destroy failed");
             });
           },error: function(obj,error){
-            console.log("profile get fail  " + obj);
+            console.log("profile get fail" + error);
           }
         });
     }
@@ -319,12 +303,12 @@ Parse.Cloud.afterSave("SiteConcept", function(request) {
         site_concept_query.get(destroy_site_concept_list[k].id, {
           success: function(site_concept_obj){
             site_concept_obj.destroy().then(function(concept_obj){
-              console.log(concept_obj.id + " site concept obj has been destroyed")
+              console.log(concept_obj.id + " profile obj has been destroyed")
             },function(error){
-            //  console.log("site concept obj destroy failed");
+              console.log("profile obj destroy failed");
             });
           },error: function(obj,error){
-            console.log("site concept get fail  " + obj);
+            console.log("profile get fail" + error);
           }
         });
     }

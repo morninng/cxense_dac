@@ -119,6 +119,66 @@ Parse.Cloud.define("cxense_traffic_keywordfilter", function(request, response) {
 
 
 
+
+Parse.Cloud.define("cxense_traffic_event_RetrieveURL", function(request, response) {
+
+	console.log("cxense_traffic_event_RetrieveURL");
+
+	var str_concept = "dac";
+
+	var  crypto = require('crypto');
+	var username = 'cxense-team@dac.co.jp';
+	var apiKey = 'api&user&Qkc0a6QqYvTPjOsYbhR7Sg==';
+	var date = new Date().toISOString();
+	var hmac = crypto.createHmac('sha256', apiKey).update(date).digest('hex');
+	var groups_array = new Array("url");
+	var filter1 = { "type":"keyword","group":"concept","item":str_concept};
+	var filter2 = { "type":"keyword","group":"site","item":"www.dac.co.jp"};
+//	var filter3 = { "type":"keyword","group":"pageclass","item":"article"};
+	var filters_array = [filter1/*,filter2/, filter3 */];
+
+	Parse.Cloud.httpRequest({
+	  method: 'POST',
+	  url: 'https://api.cxense.com/traffic/event',
+	  headers: {
+	  	'X-cXense-Authentication': 'username=' + username + ' date=' + date + ' hmac-sha256-hex=' + hmac,
+	  	'Content-Type': 'application/json;charset=utf-8'
+	  },
+	  body: { 
+	  	siteId: '1128275557251903601',
+	  	start: -1728000,
+	  	groups: groups_array,
+	  	count: 20,
+	  	filters: filters_array
+	 // 	orderBy: 'uniqueUsers'
+	  },
+	  success: function(httpResponse) {
+	  	console.log("str concept is " + str_concept + " url list is" + httpResponse.text);
+	     var data_obj = JSON.parse(httpResponse.text);
+	     var groups_array = data_obj.groups;
+	     var URL_item_array = new Array();
+	     var URL_items_array = new Array();
+	     for(var i=0; i<groups_array.length; i++ ){
+	     	if(groups_array[i].group == "url"){
+	     		URL_items_array = groups_array[i].items;
+	     		for(var j=0; j<URL_items_array.length; j++){
+	     			URL_item_array.push(URL_items_array[j].item);
+	     		}
+	     	}
+	     }
+	     console.log("url_array is" + URL_item_array);
+
+	  },
+	  error: function(httpResponse) {
+	//    response.error('Request failed with response code ' + httpResponse.status);
+	    console.log('Request failed with response code ' + httpResponse.status);
+	  }
+	});
+});
+
+
+
+
 Parse.Cloud.define("traffic_filter", function(request, response) {
 	var  crypto = require('crypto');
 	var username = 'cxense-team@dac.co.jp';
@@ -249,3 +309,17 @@ Parse.Cloud.define("profile_content_fetch", function(request, response) {
 	});
 });
 
+
+Parse.Cloud.define("file_create_test", function(request, status) {
+
+	var bytes = [ 0xBE, 0xEF, 0xCA, 0xFE ];
+	var file = new Parse.File("myfile.txt", bytes);
+
+	file.save().then(function() {
+	  // The file has been saved to Parse.
+	  console.log("file save success");
+	}, function(error) {
+	  // The file either could not be read, or could not be saved to Parse.
+	  console.log("file save fail");
+	});
+});
