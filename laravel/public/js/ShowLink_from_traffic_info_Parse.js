@@ -34,7 +34,7 @@ function construct_dom_site_concept(concept_keyword,pv_num){
 	dom_td_pv_num.text(pv_num);
 
 	var dom_a = $('<a>');
-	dom_a.attr("href","/keyword_matome2/" + concept_keyword);
+	dom_a.attr("href","/keyword_matome2/?keyword=" + concept_keyword + "&cx_keywordclick=" + concept_keyword);
 	dom_a.text(concept_keyword);
 	dom_td_concept_keyword.append(dom_a);
 	dom_tr.append(dom_td_concept_keyword);
