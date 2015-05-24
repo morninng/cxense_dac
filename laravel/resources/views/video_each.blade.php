@@ -38,7 +38,7 @@
 @section('video_main')
 
 
-
+{{$media_id}}
 
 
     <!-- Start of Brightcove Player -->
@@ -47,7 +47,7 @@
 
     
 
-    <object id="myExperience4106619707001" class="BrightcoveExperience">
+    <object id="myExperience{{$media_id}}" class="BrightcoveExperience">
       <!-- smart player api params -->
       <param name="includeAPI" value="true" />
      <param name="templateLoadHandler" value="BCL.onTemplateLoad" />
@@ -61,7 +61,7 @@
       <param name="isVid" value="true" />
       <param name="isUI" value="true" />
       <param name="dynamicStreaming" value="true" />
-      <param name="@videoPlayer" value="4106619707001" />
+      <param name="@videoPlayer" value="{{$media_id}}" />
     </object>
 
 
