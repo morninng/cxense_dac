@@ -20,6 +20,8 @@ Route::get('press/{article_year}/{article_context}', 'PressController@article');
 Route::get('press/', 'PressController@article_list');
 
 Route::get('/', 'DachomeController@index');
+Route::get('video', 'VideoController@index');
+Route::get('video/{media_id}', 'VideoController@showVideo');
 
 Route::get('/hello', function()
 {

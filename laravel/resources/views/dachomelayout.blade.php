@@ -25,7 +25,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<footer style="position: static;">
@@ -34,7 +33,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
-	
 	<script src="/js/parse_login_confirm_test.js"></script>
+
 </body>
 </html>

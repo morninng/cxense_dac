@@ -103,6 +103,9 @@ class DachomeController extends Controller {
 //$timer2->setMarker('cxense site concept done');
 //$timer2->stop();
 //$timer2->display();
+
+	
+
 		return view('dachome')
 				->with("left_area_context",$leftbar_context_converted)
 				->with("article_context",$article_context_converted)

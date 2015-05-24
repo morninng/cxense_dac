@@ -16,6 +16,7 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/') }}">Home</a></li>
+					<li><a href="{{ url('/video') }}">Video</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<?php if($login_status==0){ ?>
@@ -56,7 +57,5 @@
 	</table>
     <script src="/js/ShowLink_from_traffic_info_Parse.js"></script>
 
-
 @stop
-
 
