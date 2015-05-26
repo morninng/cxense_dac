@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="cXenseParse:dac-layout" content="認証"/>
 	<title>DAC cxense demo</title>
 
 	<link href="{{ asset('/css/app.css') }}" rel="stylesheet">

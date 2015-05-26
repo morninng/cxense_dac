@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="cXenseParse:dac-layout" content="動画"/>
 	<title>DAC cxense demo</title>
 
 		@include('common.homeheader')

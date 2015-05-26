@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="cXenseParse:dac-layout" content="ホーム"/>
+	<meta name="cXenseParse:keywords" content="keyword1,keyword2,キーワード３"/>
+	<meta name="cXenseParse:dac-participant" content="TESTER1/テスター２/tester3"/>
 	<title>DAC cxense demo</title>
 
 		@include('common.homeheader')
