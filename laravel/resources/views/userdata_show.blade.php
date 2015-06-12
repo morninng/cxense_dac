@@ -24,11 +24,9 @@ t=d.getElementsByTagName(s)[0];t.parentNode.insertBefore(e,t);})(document,'scrip
 </script>
 <!-- Cxense script end -->
 
-cxense id is
-{{$cxense_site_id}}  
+cxense id is = {{$cxense_site_id}}  
 <br>
-user parse id is
-{{$user_parse_id}}
+user parse id is = {{$user_parse_id}}
 <br>
 
 

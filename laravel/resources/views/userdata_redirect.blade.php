@@ -1,7 +1,6 @@
 @extends('userdata_layout')
 
 @section('main_context')
- aaaaaaaaa
 
 
 @stop
@@ -37,6 +36,7 @@ user parse id is
 <br>
 redirect url is 
 {{$redirect_url}}
+<br>
 <br>
 This page will be redirected in 3 seconds
 <script type="text/javascript">
