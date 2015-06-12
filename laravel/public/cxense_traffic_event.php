@@ -42,7 +42,9 @@
 			array_push($url_array, $url );
 		}
 
-		echo("<br><br>");
+		echo("<br>obj<br>");
+		var_dump($obj);
+		echo("<br>result<br>");
 		var_dump($result_traffic_event);
 
 		return $url_array;

@@ -1,15 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
 
 //require_once 'simple_html_dom.php';
 
@@ -40,13 +30,23 @@ Route::get('/parselogin','ParseauthController@getLogin');
 Route::post('/parselogin','ParseauthController@postLogin');
 Route::get('/parsesignin','ParseauthController@getSignin');
 Route::post('/parsesignin','ParseauthController@postSignin');
+
 // Route::post('/parsesignin',function(){return 'helloworld';});
+
 Route::get('/parselogout', 'ParseauthController@getLogout');
 
 Route::get('/editprofile', 'ParseauthController@editprofile');
 Route::post('/editprofile', 'ParseauthController@post_editprofile');
 
+Route::get('/solution_home/{user_parse_id}/', 'SolutionController@home');
+Route::get('/solution_bikebros_redirect/{user_parse_id}', 'SolutionController@bikebros_redirect');
+Route::get('/solution_dac_redirect/{user_parse_id}', 'SolutionController@dac_redirect');
+Route::get('/solution_people_list', 'SolutionController@people_list');
+Route::get('/show_user_data_dac/{user_parse_id}', 'SolutionController@show_user_data_dac');
+Route::get('/show_user_data_bikebros/{user_parse_id}', 'SolutionController@show_user_data_bikebros');
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
