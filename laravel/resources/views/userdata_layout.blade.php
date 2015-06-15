@@ -5,6 +5,7 @@
 	<title>cxense solution presen demo</title>
 
 	<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.4.0.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript" src="http://cdn.cxense.com/cx.js"></script>
 	
 </head>
@@ -24,6 +25,6 @@
 
 
 	@yield('cxense_script')
-
+	@yield('page_script')
 </body>
 </html>

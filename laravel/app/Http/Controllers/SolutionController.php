@@ -19,20 +19,23 @@ class SolutionController extends Controller {
 	public function show_user_data_bikebros($user_parse_id)
 	{
 		$bikebros_cxense_id = "1130531920128972215";
-		retrieve_user_data($bikebros_cxense_id, $user_parse_id);
+		$user_data_array = retrieve_user_data($bikebros_cxense_id, $user_parse_id);
 		
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
+				->with("user_data_array",$user_data_array)
 				->with("cxense_site_id",$bikebros_cxense_id);
 	}
 
 	public function show_user_data_dac($user_parse_id)
 	{
 		$dac_cxense_id = "1128275557251903601";
-		$this->retrieve_user_data($dac_cxense_id, $user_parse_id);
+		
+		$user_profile_array = $this->retrieve_user_data($dac_cxense_id, $user_parse_id);
 
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
+				->with("user_profile_array",$user_profile_array)
 				->with("cxense_site_id",$dac_cxense_id);
 	}
 
@@ -67,20 +70,13 @@ class SolutionController extends Controller {
 
 	public function retrieve_user_data($cxense_id, $user_parse_id){
 
-		$url_array = array();
-
-		$keyword = "dac";
 		$username="cxense-team@dac.co.jp";
 		$apikey="api&user&Qkc0a6QqYvTPjOsYbhR7Sg==";
 		$date = date("Y-m-d\TH:i:s.000O");
 		$signature=hash_hmac("sha256", $date, $apikey);
-		$url = 'https://api.cxense.com/profile/user/external/read';
+		$url = 'https://api.cxense.com/profile/user';
 
-		echo("signature  :" . $signature); echo("<br><br>");
 		$plainjson_payload = "{\"id\":\"$user_parse_id\", \"type\":\"dac\" }";
-
-		echo("payload  :" . $plainjson_payload);echo("<br><br>");
-
 		$options = array(
 		    'http' => array(
 		        'header'  => "Content-Type: application/json; charset=UTF-8\r\n".
@@ -92,21 +88,31 @@ class SolutionController extends Controller {
 		$context  = stream_context_create($options);
 		$user_profile   = file_get_contents($url, false, $context);
 		$obj = json_decode($user_profile);
-		$user_data_array = $obj->{'data'};
+		$user_profile_array = $obj->{'profile'};
+/*
+		foreach ($user_profile_array as $user_profile){
 
-		var_dump($obj);
-		var_dump($user_data_array);
+			$user_item = $user_profile->{'item'};
+			$user_group_array = $user_profile->{'groups'};
+			echo "user item is <strong>" . $user_item . "</strong><br>";
+			foreach ($user_group_array as $user_group){
+			//	$count =  $user_group->{'count'};
+			//	echo "count is " . $count . "<br>";
+				$group =  $user_group->{'group'};
+				echo "group is " . $group . "<br>";
+				$weight =  $user_group->{'weight'};
+				echo "weight is " . $weight . "<br>";
+			}
+			echo "<br>";
+			echo "<br>";
+			echo "<br>";
+		}
+*/
+		echo "object retrieved by profile/user/";
+		echo "<br>";
+		echo "parse id used is " . $user_parse_id . "<br>";
+		echo "cxense id used is " . $cxense_id;
 
-
-		echo("<br>obj<br>");
-		echo("<br>result<br>");
-
-
-
+		return $user_profile_array;
 	}
-
-
-
 }
-
-
