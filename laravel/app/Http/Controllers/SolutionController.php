@@ -19,11 +19,11 @@ class SolutionController extends Controller {
 	public function show_user_data_bikebros($user_parse_id)
 	{
 		$bikebros_cxense_id = "1130531920128972215";
-		$user_data_array = retrieve_user_data($bikebros_cxense_id, $user_parse_id);
+		$user_profile_array = $this->retrieve_user_data($bikebros_cxense_id, $user_parse_id);
 		
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
-				->with("user_data_array",$user_data_array)
+				->with("user_profile_array",$user_profile_array)
 				->with("cxense_site_id",$bikebros_cxense_id);
 	}
 

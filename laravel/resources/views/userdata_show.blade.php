@@ -8,7 +8,7 @@
 		td { border: solid thin; }
 	</style>
 
-	<span id = "parse_data"></span>
+	<span id = "parse_data"></span><br><br><br>
 	<br>
 	<table >
 	<tr><th>item</th><th>group</th><th>weight</th></tr>
@@ -31,6 +31,12 @@
 	?>
 
 	</table>
+
+
+<p>link to other company data </p>
+
+<a href="/show_user_data_dac/{{$user_parse_id}}"> dac site data </a><br>
+<a href="/show_user_data_bikebros/{{$user_parse_id}}"> bikebros site data </a>
 
 
 @stop
@@ -56,6 +62,19 @@ t=d.getElementsByTagName(s)[0];t.parentNode.insertBefore(e,t);})(document,'scrip
 
 @section('page_script')
 
+<script type = "text/template" data-template="user_parse_info_template">
+  <div  style='float:left;border:solid 1px;  padding: 5px;' >
+      <div  style="float:left; margin-left:5px;">
+        <img src="<%=picture_src %>">
+      </div>
+     <div style="float:left; margin-left:10px;">
+      <%= first_name %>  &nbsp;  <%= last_name  %> 
+      </div>
+   </div>
+</script>
+
+
+
 
 <script> 
   Parse.initialize("EWPPdrDVaAIqhRazWp8K0ZlmafAAPt93JiOAonvX", "US6Lheio8PGcBdIpwGFhFSQVpi5GKunGf6hGq5Ze");
@@ -65,8 +84,21 @@ t=d.getElementsByTagName(s)[0];t.parentNode.insertBefore(e,t);})(document,'scrip
 	var user_query = new Parse.Query(User);
 	user_query.get(user_parse_id, {
 	  success: function(user_obj) {
-	  	var user_name = user_obj.get('username');
-	  	console.log(user_name);
+	  	var first_name = user_obj.get('FirstName');
+	  	var last_name = user_obj.get('LastName');
+	  	var profile_picture_src = user_obj.get('Profile_picture');
+	  	console.log(first_name);
+	  	console.log(last_name);
+	  	console.log(profile_picture_src);
+
+	    var data = { first_name: first_name, last_name: last_name, picture_src: profile_picture_src };
+
+	    html_Template = _.template($('[data-template="user_parse_info_template"]').html());
+	    var html_text = html_Template(data);
+	    var participant_container = $("#parse_data");
+	    participant_container.html(html_text);
+
+
 	  },
 	  error: function(object, error) {
 	  }
