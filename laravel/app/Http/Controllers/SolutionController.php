@@ -140,7 +140,7 @@ class SolutionController extends Controller {
 		$context  = stream_context_create($options);
 		$user_traffic_keyword   = file_get_contents($url, false, $context);
 		$obj = json_decode($user_traffic_keyword);
-		echo $obj;
+		var_dump($obj);
 
 	}
 }
