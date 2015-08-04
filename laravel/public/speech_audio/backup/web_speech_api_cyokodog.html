@@ -1,0 +1,16 @@
+
+
+<script>
+window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+var recognition = new webkitSpeechRecognition();
+recognition.lang = 'ja';
+ 
+// 録音終了時トリガー
+recognition.addEventListener('result', function(event){
+    alert(event.results.item(0).item(0).transcript)
+}, false);
+ 
+// 録音開始
+recognition.start();
+
+</script>
