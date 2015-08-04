@@ -1,0 +1,108 @@
+<html>
+<head>
+<meta charset="utf-8">
+
+</head>
+<body>
+
+
+
+<h1>Speech Recognition2</h1>
+<div id="area2"><span class="final" id="final_span"></span> <span class="interim" id="interim_span"></span></div>
+<input id="btn2" type="button" value="音声認識を継続的に行う"/>
+<select id="select2">
+    <option value="ja-JP">日本語</option>
+    <option value="en-US">English</option>
+</select>
+
+
+<style>
+
+#area2 {
+    width: 90%;
+    height: 3em;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+#btn2 {
+    background: -webkit-linear-gradient(top,#008dfd 30%,#0370ea 100%);
+    color: white;
+    text-shadow: 1px 1px 1px #076bd2;
+    border-radius: 3px;
+    border: 1px solid #076bd2;
+    padding: 8px 25px;
+    font-weight: 700;
+    font-size: 15px;
+}
+#btn2.select {
+    background: -webkit-linear-gradient(top,#f2739e 30%,#f23f7b 100%);
+    text-shadow: 1px 1px 1px #f1115c;
+    border: 1px solid #f1115c;
+}
+#select2 {
+    width: 200px;
+}
+
+</style>
+
+<script>
+
+var recognition;
+var nowRecognition = false;
+var $finalSpan = document.querySelector('#final_span');
+var $interimSpan = document.querySelector('#interim_span');
+
+function start () {
+    recognition = new webkitSpeechRecognition();
+    recognition.lang = document.querySelector('#select2').value;
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.onresult = function (e) {
+        var finalText = '';
+        var interimText = '';
+        for (var i = 0; i < e.results.length; i++) {
+            if (e.results[i].isFinal) {
+                finalText += e.results[i][0].transcript;
+            } else {
+                interimText += e.results[i][0].transcript;
+            }
+        }
+        $interimSpan.textContent = interimText;
+        $finalSpan.textContent = finalText;
+    };
+    recognition.start();
+    nowRecognition = true;
+};
+
+function stop () {
+    recognition.stop();
+    nowRecognition = false;
+}
+
+document.querySelector('#btn2').onclick = function () {
+    
+    // unsupported.
+    if (!'webkitSpeechRecognition' in window) {
+        alert('Web Speech API には未対応です.');
+        return;
+    }
+    
+    if (nowRecognition) {
+        stop();
+        this.value = '音声認識を継続的に行う';
+        this.className = '';
+    } else {
+        start();
+        this.value = '音声認識を止める';
+        this.className = 'select';
+    }
+}
+
+</script>
+
+
+</body>
+
+</html>

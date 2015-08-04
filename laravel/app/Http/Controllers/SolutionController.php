@@ -32,6 +32,7 @@ class SolutionController extends Controller {
 		$dac_cxense_id = "1128275557251903601";
 		
 		$user_profile_array = $this->retrieve_user_data($dac_cxense_id, $user_parse_id);
+		$user_traffic_keyword = $this->retrieve_profile_from_traffic_keyword($dac_cxense_id, $user_parse_id);
 
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
@@ -114,5 +115,32 @@ class SolutionController extends Controller {
 		echo "cxense id used is " . $cxense_id;
 
 		return $user_profile_array;
+	}
+	
+	
+	public function retrieve_profile_from_traffic_keyword($cxense_id, $user_parse_id){
+	
+		$username="cxense-team@dac.co.jp";
+		$apikey="api&user&Qkc0a6QqYvTPjOsYbhR7Sg==";
+		$date = date("Y-m-d\TH:i:s.000O");
+		$signature=hash_hmac("sha256", $date, $apikey);
+		$url = 'https://api.cxense.com/traffic/keyword';
+
+		$plainjson_payload = "{\"siteId\":\"$cxense_id\"
+					, \"filters\":[{\"type\":\"user\", \"group\":\"dac\", \"item\":\"$user_parse_id\"}]
+								}";
+		$options = array(
+		    'http' => array(
+		        'header'  => "Content-Type: application/json; charset=UTF-8\r\n".
+		                     "X-cXense-Authentication: username=$username date=$date hmac-sha256-hex=$signature\r\n",
+		        'method'  => 'POST',
+		        'content' => $plainjson_payload,
+		    ),
+		);
+		$context  = stream_context_create($options);
+		$user_traffic_keyword   = file_get_contents($url, false, $context);
+		$obj = json_decode($user_traffic_keyword);
+		echo $obj;
+
 	}
 }
