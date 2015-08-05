@@ -11,6 +11,7 @@
 	<span id = "parse_data"></span><br><br><br>
 	<br>
 	<table >
+	<caption>data retrieved by profile-user</caption>
 	<tr><th>item</th><th>group</th><th>weight</th></tr>
 
 	<?php
@@ -31,6 +32,25 @@
 	?>
 
 	</table>
+
+	<br>
+	<table >
+	<caption>data retrieved by traffic keyword</caption>
+	<tr><th>item</th><th>group</th><th>weight</th></tr>
+
+	<?php
+		foreach ($user_traffic_keyword_array as $group){
+			$group_group = $group->{'group'};
+			echo "<tr><td>" . $group_group . "</td>";
+			$group_items_array = $group->{'items'};
+
+			foreach ($group_items_array as $group_item){
+				$item = $group_item->{'item'};
+				echo "<td>" . $item . "</td>";
+			}
+			echo "</tr>";
+		}
+	?>
 
 
 <p>link to other company data </p>
