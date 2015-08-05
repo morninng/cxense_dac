@@ -141,13 +141,13 @@ class SolutionController extends Controller {
 		$context  = stream_context_create($options);
 		$user_traffic_keyword   = file_get_contents($url, false, $context);
 		$obj = json_decode($user_traffic_keyword);
+		$groups_array = $obj->{'groups'};
+
+/*		
 		echo '<br>traffic keyword<br>';
 		var_dump($obj);
 		echo '<br>group<br>';
-		$groups_array = $obj->{'groups'};
 		var_dump($obj->{'groups'});
-
-
 		echo '<br>-----------------<br>';
 		foreach ($groups_array as $group){
 			echo '<br>items array<br>';
@@ -169,7 +169,7 @@ class SolutionController extends Controller {
 			}
 			echo '<br><br>';
 		}
-
+*/
 		return $groups_array;
 
 	}
