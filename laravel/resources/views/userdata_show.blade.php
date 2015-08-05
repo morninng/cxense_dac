@@ -74,6 +74,8 @@
 		}
 	?>
 
+	</table>
+	</br>
 
 <p>link to other company data </p>
 

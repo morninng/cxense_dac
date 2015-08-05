@@ -205,7 +205,7 @@ class SolutionController extends Controller {
 		$user_traffic_event   = file_get_contents($url, false, $context);
 		$obj = json_decode($user_traffic_event);
 		$groups_array = $obj->{'groups'};
-
+/*
 		echo '<br>traffic event<br>';
 		var_dump($obj);
 
@@ -232,7 +232,7 @@ class SolutionController extends Controller {
 			}
 			echo '<br><br>';
 		}
-
+*/
 		return $groups_array;
 
 	}
