@@ -53,6 +53,28 @@
 	?>
 
 
+
+
+	<br>
+	<table >
+	<caption>data retrieved by traffic event</caption>
+	<tr><th>item</th><th>group</th><th>weight</th></tr>
+
+	<?php
+		foreach ($user_traffic_event_array as $group){
+			$group_group = $group->{'group'};
+			echo "<tr><td>" . $group_group . "</td>";
+			$group_items_array = $group->{'items'};
+
+			foreach ($group_items_array as $group_item){
+				$item = $group_item->{'item'};
+				echo "<td>" . $item . "</td>";
+			}
+			echo "</tr>";
+		}
+	?>
+
+
 <p>link to other company data </p>
 
 <a href="/show_user_data_dac/{{$user_parse_id}}"> dac site data </a><br>

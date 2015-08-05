@@ -34,11 +34,15 @@ class SolutionController extends Controller {
 		$user_profile_array = $this->retrieve_user_data($dac_cxense_id, $user_parse_id);
 		$user_traffic_keyword_array = $this->retrieve_profile_from_traffic_keyword($dac_cxense_id, $user_parse_id);
 
+		$user_traffic_event_array = $this->retrieve_profile_from_traffic_event($dac_cxense_id, $user_parse_id);
+
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
 				->with("user_profile_array",$user_profile_array)
 				->with("user_traffic_keyword_array",$user_traffic_keyword_array)
+				->with("user_traffic_event_array",$user_traffic_event_array)
 				->with("cxense_site_id",$dac_cxense_id);
+
 	}
 
 	public function bikebros_redirect($user_parse_id)
@@ -173,5 +177,66 @@ class SolutionController extends Controller {
 		return $groups_array;
 
 	}
+
+
+
+
+
+	public function retrieve_profile_from_traffic_event($cxense_id, $user_parse_id){
+	
+		$username="cxense-team@dac.co.jp";
+		$apikey="api&user&Qkc0a6QqYvTPjOsYbhR7Sg==";
+		$date = date("Y-m-d\TH:i:s.000O");
+		$signature=hash_hmac("sha256", $date, $apikey);
+		$url = 'https://api.cxense.com/traffic/event';
+
+		$plainjson_payload = "{\"siteId\":\"$cxense_id\"
+					, \"filters\":[{\"type\":\"user\", \"group\":\"dac\", \"item\":\"$user_parse_id\"}]
+								}";
+		$options = array(
+		    'http' => array(
+		        'header'  => "Content-Type: application/json; charset=UTF-8\r\n".
+		                     "X-cXense-Authentication: username=$username date=$date hmac-sha256-hex=$signature\r\n",
+		        'method'  => 'POST',
+		        'content' => $plainjson_payload,
+		    ),
+		);
+		$context  = stream_context_create($options);
+		$user_traffic_event   = file_get_contents($url, false, $context);
+		$obj = json_decode($user_traffic_event);
+		$groups_array = $obj->{'groups'};
+
+		echo '<br>traffic event<br>';
+		var_dump($obj);
+
+
+		echo '<br>traffic keyword<br>';
+		var_dump($obj);
+		echo '<br>group<br>';
+		var_dump($obj->{'groups'});
+		echo '<br>-----------------<br>';
+		foreach ($groups_array as $group){
+			echo '<br>items array<br>';
+			$group_group = $group->{'group'};
+			print($group_group);
+			echo '<br>';
+			$group_items_array = $group->{'items'};
+			var_dump($group_items_array );
+			foreach ($group_items_array as $group_item){
+				var_dump($group_item);
+				$item = $group_item->{'item'};
+				echo '<br>';
+				echo 'item is ';
+				print($item);
+				echo '<br><br>';
+			}
+			echo '<br><br>';
+		}
+
+		return $groups_array;
+
+	}
+
+
 
 }
