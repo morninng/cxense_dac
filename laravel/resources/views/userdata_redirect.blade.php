@@ -41,7 +41,7 @@ redirect url is
 データの取得中です。今しばらくお待ちください。
 
 <script type="text/javascript">
-	 setTimeout( function(){ redirect(); },10);
+	 setTimeout( function(){ redirect(); },50);
 
 	function redirect(){
 		window.location.href = "{{$redirect_url}}";
