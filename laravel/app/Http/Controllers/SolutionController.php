@@ -19,10 +19,16 @@ class SolutionController extends Controller {
 	public function show_user_data_bikebros($user_parse_id)
 	{
 		$bikebros_cxense_id = "1130531920128972215";
+		
 		$user_profile_array = $this->retrieve_user_data($bikebros_cxense_id, $user_parse_id);
+		$user_traffic_keyword_array = $this->retrieve_profile_from_traffic_keyword($bikebros_cxense_id, $user_parse_id);
+		$user_traffic_event_array = $this->retrieve_profile_from_traffic_event($bikebros_cxense_id, $user_parse_id);
+
 		
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
+				->with("user_traffic_keyword_array",$user_traffic_keyword_array)
+				->with("user_traffic_event_array",$user_traffic_event_array)
 				->with("user_profile_array",$user_profile_array)
 				->with("cxense_site_id",$bikebros_cxense_id);
 	}
@@ -33,7 +39,6 @@ class SolutionController extends Controller {
 		
 		$user_profile_array = $this->retrieve_user_data($dac_cxense_id, $user_parse_id);
 		$user_traffic_keyword_array = $this->retrieve_profile_from_traffic_keyword($dac_cxense_id, $user_parse_id);
-
 		$user_traffic_event_array = $this->retrieve_profile_from_traffic_event($dac_cxense_id, $user_parse_id);
 
 		return view('userdata_show')
