@@ -40,7 +40,7 @@ redirect url is
 <br>
 This page will be redirected in 3 seconds
 <script type="text/javascript">
-	 setTimeout( function(){ redirect(); },50);
+	 setTimeout( function(){ redirect(); },10);
 
 	function redirect(){
 		window.location.href = "{{$redirect_url}}";
