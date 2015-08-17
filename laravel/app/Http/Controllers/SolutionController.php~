@@ -42,7 +42,7 @@ class SolutionController extends Controller {
 		$user_profile_array = $this->retrieve_user_data($dac_cxense_id, $user_parse_id);
 		$user_traffic_keyword_array = $this->retrieve_profile_from_traffic_keyword($dac_cxense_id, $user_parse_id);
 		$user_traffic_event_array = $this->retrieve_profile_from_traffic_event($dac_cxense_id, $user_parse_id);
-	//	$user_content = $this->retrieve_content($dac_cxense_id,$widget_id, $user_parse_id, $url);
+		$user_content = $this->retrieve_content($dac_cxense_id,$widget_id, $user_parse_id, $url);
 
 		return view('userdata_show')
 				->with("user_parse_id",$user_parse_id)
@@ -154,42 +154,37 @@ class SolutionController extends Controller {
 		$user_traffic_keyword   = file_get_contents($url, false, $context);
 		$obj = json_decode($user_traffic_keyword);
 		$groups_array = $obj->{'groups'};
-/*
+		
 		 var_dump($groups_array);
 
 		
 		echo '<br>traffic keyword<br>';
 		var_dump($obj);
 		echo '<br>group<br>';
-		//var_dump($obj->{'groups'});
+		var_dump($obj->{'groups'});
 		echo '<br>-----------------<br>';
 		foreach ($groups_array as $group){
 			echo '<br>items array<br>';
 			$group_group = $group->{'group'};
-		//	print($group_group);
+			print($group_group);
 			echo '<br>';
 			$group_data = $group->{'data'};
-		//	var_dump($group_data );
+			var_dump($group_data );
 			echo '<br>';
 			$group_items_array = $group->{'items'};
 			var_dump($group_items_array );
 			foreach ($group_items_array as $group_item){
-				echo 'group item <br>';
 				var_dump($group_item);
 				$item = $group_item->{'item'};
 				echo '<br>';
 				echo 'item is ';
 				print($item);
-				$item_weight = $group_item->{'data'}->{'weight'};
-				echo '<br>';
-				echo 'item_weight is ';
-				var_dump($item_weight);
+				$weight = $group_item->{'weight'};
+				print($weight);
 				echo '<br><br>';
 			}
 			echo '<br><br>';
 		}
-
-*/
 
 		return $groups_array;
 

@@ -47,6 +47,8 @@
 			foreach ($group_items_array as $group_item){
 				$item = $group_item->{'item'};
 				echo "<td>" . $item . "</td>";
+				$weight = $group_item->{'data'}->{'weight'};
+				echo "<td>" . $weight . "</td>";
 			}
 			echo "</tr>";
 		}
