@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 
-include(app_path().'/Http/Controllers/lib/simple_html_dom.php');
+require_once(app_path().'/Http/Controllers/lib/simple_html_dom.php');
 // require_once 'Benchmark/Timer.php';
 
 class ExciteController extends Controller {

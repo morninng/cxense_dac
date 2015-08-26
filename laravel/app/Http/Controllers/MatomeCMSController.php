@@ -1,5 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+
+	require_once(app_path().'/Http/Controllers/opengraph-master/OpenGraph.php');
+	//include(app_path().'/Http/Controllers/lib/simple_html_dom.php');
+
 class MatomeCMSController extends Controller {
 
 
@@ -32,22 +36,63 @@ class MatomeCMSController extends Controller {
 
 	public function cms_site_list()
 	{
+		echo '<meta charset="utf-8">';
 		$param = $_GET['keyword'];
 		echo $param;
 		$keywords_array = explode("_", $param);
 		var_dump($keywords_array);
 
-		$url_list_array = $this->RetrieveURL_list_traffic_event($keywords_array[0]);
-		//var_dump($url_list);
 
-		foreach ($url_list_array as $i => $value){
-			//$content = $this->retrieve_profile_content_fetch($url_list[10]);
-			echo "<br>" . $value;
-			$traffic_data = $this->retrieve_traffic($url_list_array[$i]);
-			var_dump($traffic_data );
+		$matome_data_object_array = array();
+
+		foreach ($keywords_array as $j => $keyword_value){
+
+		//	echo '<h2> kayword is ' . $keyword_value .'</h2>';
+			$url_list_array = $this->RetrieveURL_list_traffic_event($keywords_array[$j]);
+			//var_dump($url_list);
+
+			$list_urldata_for_one_keyword = array();
+
+			foreach ($url_list_array as $i => $value){
+
+//				echo "<br>" . $value;
+
+				$traffic_data = $this->retrieve_traffic($url_list_array[$i]);
+/*
+				echo '<br>traffic data <br>';
+				var_dump($traffic_data );
+*/
+				$graph = \OpenGraph::fetch($url_list_array[$i]); 
+
+				foreach($graph as $g_i => $g_value){
+					$traffic_data->{$g_i} = $g_value;
+				}
+/*
+				echo '<br>graph data <br>';
+				var_dump($graph );
+
+				$title = $graph->{'title'};
+				echo "title" . $title . "<br>";
+				$description = $graph->{'description'};
+				echo "description" . $description . "<br>";
+				$image = $graph->{'image'};
+				echo "image" . $image . "<br>";
+				$type = $graph->{'type'};
+				echo "type" . $type . "<br>";
+				$site_name = $graph->{'site_name'};
+				echo "site name" . $site_name . "<br>";
+*/
+			//	$connected_data = array_merge((array)$traffic_data , (array)$graph);
+
+				array_push($list_urldata_for_one_keyword, $traffic_data);
+			}
+			$obj = [ "keyword" => $keyword_value, "list_data" => $list_urldata_for_one_keyword];
+			array_push($matome_data_object_array, $obj);
 		}
-		
-		return view('home');
+	//	var_dump($matome_data_object_array);
+
+		return view('matome_url_context')
+				->with("matome_data_object_array",$matome_data_object_array);
 	}
 
 	public function matome_link()
@@ -77,7 +122,7 @@ class MatomeCMSController extends Controller {
 
 		$plainjson_payload = "{\"siteId\":\"$this->cxense_siteid\",
 							   \"groups\":[\"url\"],
-							   \"count\":50,
+							   \"count\":2,
 		\"filters\":[{\"type\":\"keyword\",\"group\":\"concept\", \"item\":\"$keyword\"}]
 								}";
 		$options = array(
@@ -251,8 +296,9 @@ class MatomeCMSController extends Controller {
 		$result_traffic = file_get_contents($url_traffic, false, $context_traffic);
 
 		$obj = json_decode($result_traffic );
-		echo "<br> --- traffic event info<br>";
+	//	echo "<br> --- traffic event info<br>";
 		$traffic_data = $obj->{'data'};
+/*
 		var_dump($traffic_data);
 		echo "<br>";
 		$traffic_pv = $traffic_data->{'events'};
@@ -263,7 +309,7 @@ class MatomeCMSController extends Controller {
 		echo "active time " . $traffic_active_time . "<br>";
 		$traffic_bounce = $traffic_data->{'sessionBounces'};
 		echo "traffic bounce " . $traffic_bounce . "<br>";
-
+*/
 		return $traffic_data;
 	}
 
