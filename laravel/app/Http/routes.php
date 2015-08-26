@@ -45,6 +45,18 @@ Route::get('/solution_people_list', 'SolutionController@people_list');
 Route::get('/show_user_data_dac/{user_parse_id}', 'SolutionController@show_user_data_dac');
 Route::get('/show_user_data_bikebros/{user_parse_id}', 'SolutionController@show_user_data_bikebros');
 
+
+Route::get('/matome_cms_publisherlist', 'MatomeCMSController@cms_publisher_list');
+Route::get('/matome_cms_keywordlist', 'MatomeCMSController@cms_keyword_list');
+Route::get('/matome_cms_sitelist', 'MatomeCMSController@cms_site_list');
+Route::get('/matome_site_link', 'MatomeCMSController@matome_link');
+Route::get('/matome_site/{keyword}', 'MatomeCMSController@matome_site');
+
+
+
+Route::get('detail/{recipe_id}', 'ExciteController@detail');
+
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
