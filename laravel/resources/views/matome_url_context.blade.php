@@ -50,10 +50,13 @@ function generate_matome(){
     var url_content_array = eval("document." + keyword + ".elements");
     for(var j=0; j<url_content_array.length; j++ ){
       if( url_content_array[j].checked ){
-        console.log(url_content_array[j].value)
+        console.log(url_content_array[j].value);
+        console.log(all_matome_data_array[i][j]["title"]);
       }
     }
+
   }
+
 }
 
 </script>
@@ -94,6 +97,7 @@ function generate_matome(){
 
   var matome_template = _.template($('[data-template="matome_select_template"]').html());
   var keyword_list = new Array();
+  var all_matome_data_array = new Array();
 <?php
   foreach ($matome_data_object_array as $matome_data_object){
 ?> 
@@ -118,6 +122,7 @@ function generate_matome(){
   <?php
     }
   ?> 
+  all_matome_data_array.push(matome_list);
   console.log(matome_list);
   matome_object["matome_list"] = matome_list;
   var matome_html = matome_template(matome_object);
