@@ -15,12 +15,29 @@
 </script>
 
 <style>
-.border_box{
-  border: 1px 
-  solid #000000;
-  padding-left: 30px;
-  padding-right: 30px;
+.matome_each_item{
+  border: 1px solid #000000;
+  display:flex;
+  align-items:stretch;
 }
+.matome_check_box_block{
+  border: 1px solid #000000;
+  width: 30px;
+}
+.check_box{
+    vertical-align: middle;
+}
+
+.matome_image{
+  border: 1px solid #000000;
+  width: 120px;
+}
+.matome_description{
+  border: 1px;
+  solid #000000;
+  flex:1;
+}
+
 </style>
 <script type="text/template" data-template="matome_select_template">
  
@@ -28,16 +45,23 @@
   <ul>
      <% _.each(matome_list, function(e,i){ %>
           <li>
-            <div class="border_box">
-              <p> title <strong><a href="<%= e.url %>"> <%= e.title %> </a></strong></p>
-              <img src="<%= e.img_src %>" style="max-width:100px">
-              <p> description <%= e.description %></p>
-              <p>site name <%= e.site_name %></p>
-              <p> 
-                <span class="border_box"> pv &nbsp&nbsp <%= e.pv %> </span>
-                <span class="border_box"> active time &nbsp&nbsp <%= e.activeTime %> </span>
-                <span class="border_box"> session bounce &nbsp&nbsp <%= e.sessionBounces %> </span>
-               </p>
+            <div class="matome_each_item">
+              <div class="matome_check_box_block">
+                  <input class="check_box" type="checkbox">
+              </div>
+              <div class="matome_description">
+                <p> title <strong><a href="<%= e.url %>"> <%= e.title %> </a></strong></p>
+                <p> description <%= e.description %></p>
+                <p>site name <%= e.site_name %></p>
+                <p> 
+                  <span class="border_box"> pv &nbsp&nbsp <%= e.pv %> </span>
+                  <span class="border_box"> active time &nbsp&nbsp <%= e.activeTime %> </span>
+                  <span class="border_box"> session bounce &nbsp&nbsp <%= e.sessionBounces %> </span>
+                </p>
+              </div>
+              <div class="matome_image">
+                <img src="<%= e.img_src %>" style="max-width:100px">
+              </div>
             </div>
           </li>
      <% }); %>
@@ -75,7 +99,6 @@
   matome_object["matome_list"] = matome_list;
   var matome_html = matome_template(matome_object);
   $("#matome_list").append(matome_html);
-
 <?php
   }
 ?>
