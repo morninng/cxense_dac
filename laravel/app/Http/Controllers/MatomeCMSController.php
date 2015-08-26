@@ -38,9 +38,9 @@ class MatomeCMSController extends Controller {
 	{
 		echo '<meta charset="utf-8">';
 		$param = $_GET['keyword'];
-		echo $param;
+//		echo $param;
 		$keywords_array = explode("_", $param);
-		var_dump($keywords_array);
+//		var_dump($keywords_array);
 
 
 		$matome_data_object_array = array();
@@ -55,9 +55,22 @@ class MatomeCMSController extends Controller {
 
 			foreach ($url_list_array as $i => $value){
 
-//				echo "<br>" . $value;
+				// echo "<br>" . $value;
+				$url_related_data = new \stdClass();
+
+				$url_related_data->{'url'} = $value;
+				$url_related_data->{'title'} = "";
+				$url_related_data->{'image'} = "";
+				$url_related_data->{'description'} = "";
+				$url_related_data->{'site_name'} = "";
+
 
 				$traffic_data = $this->retrieve_traffic($url_list_array[$i]);
+				foreach($traffic_data as $g_i => $g_value){
+					$url_related_data->{$g_i} = $g_value;
+				}
+
+
 /*
 				echo '<br>traffic data <br>';
 				var_dump($traffic_data );
@@ -65,7 +78,7 @@ class MatomeCMSController extends Controller {
 				$graph = \OpenGraph::fetch($url_list_array[$i]); 
 
 				foreach($graph as $g_i => $g_value){
-					$traffic_data->{$g_i} = $g_value;
+					$url_related_data->{$g_i} = $g_value;
 				}
 /*
 				echo '<br>graph data <br>';
@@ -84,7 +97,7 @@ class MatomeCMSController extends Controller {
 */
 			//	$connected_data = array_merge((array)$traffic_data , (array)$graph);
 
-				array_push($list_urldata_for_one_keyword, $traffic_data);
+				array_push($list_urldata_for_one_keyword, $url_related_data);
 			}
 			$obj = [ "keyword" => $keyword_value, "list_data" => $list_urldata_for_one_keyword];
 			array_push($matome_data_object_array, $obj);

@@ -2,7 +2,7 @@
 
 @section('main_context')
 
- check each word and retrieve the content data for each word.<br>
+ chose the article which you want to show on matome site<br>
 <hr>
 
 <span id="matome_list"></span>
@@ -38,11 +38,12 @@
   flex:1;
 }
 
+
 </style>
 <script type="text/template" data-template="matome_select_template">
  
 <h1> keyword is <%= keyword %> </h1>
-  <ul>
+  <ul style="list-style:none;">
      <% _.each(matome_list, function(e,i){ %>
           <li>
             <div class="matome_each_item">
@@ -50,13 +51,13 @@
                   <input class="check_box" type="checkbox">
               </div>
               <div class="matome_description">
-                <p> title <strong><a href="<%= e.url %>"> <%= e.title %> </a></strong></p>
-                <p> description <%= e.description %></p>
-                <p>site name <%= e.site_name %></p>
+                <p> title <strong><a href="<%= e.url %>"> <%= e.title %> </a></strong><br>
+                 description <%= e.description %><br>
+                 site name <%= e.site_name %></p>
                 <p> 
-                  <span class="border_box"> pv &nbsp&nbsp <%= e.pv %> </span>
-                  <span class="border_box"> active time &nbsp&nbsp <%= e.activeTime %> </span>
-                  <span class="border_box"> session bounce &nbsp&nbsp <%= e.sessionBounces %> </span>
+                  <span class="border_box"> pv &nbsp <%= e.pv %>&nbsp&nbsp&nbsp&nbsp</span>
+                  <span class="border_box"> active time :&nbsp <%= e.activeTime %>&nbsp&nbsp&nbsp&nbsp </span>
+                  <span class="border_box"> session bounce :&nbsp <%= e.sessionBounces %>&nbsp&nbsp&nbsp&nbsp </span>
                 </p>
               </div>
               <div class="matome_image">
