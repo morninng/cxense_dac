@@ -85,8 +85,10 @@ class MatomeCMSController extends Controller {
 				echo '<br>traffic data <br>';
 				var_dump($traffic_data );
 */
+				var_dump($url_list_array[$i]);
 				$graph = \OpenGraph::fetch($url_list_array[$i]); 
 
+				var_dump($graph);
 				foreach($graph as $g_i => $g_value){
 					$url_related_data->{$g_i} = $g_value;
 				}
@@ -118,10 +120,7 @@ class MatomeCMSController extends Controller {
 				->with("matome_data_object_array",$matome_data_object_array);
 	}
 
-	public function matome_link()
-	{
-		return view('home');
-	}
+
 
 	public function matome_site($keyword)
 	{

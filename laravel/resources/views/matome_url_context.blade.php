@@ -85,6 +85,7 @@ function generate_matome(){
   }
   Parse.Promise.when(save_urlcontext_promise).then(function(){
     console.log("go to matome page");
+    location.href = "/matome_site_link";
     
 
   }, function(error) {
