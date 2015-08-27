@@ -34,6 +34,16 @@ class MatomeCMSController extends Controller {
 				->with("keyword_array",$keyword_array);
 	}
 
+
+	public function matome_site_link()
+	{
+
+		return view('matome_site_link');
+	}
+
+
+
+
 	public function cms_site_list()
 	{
 		echo '<meta charset="utf-8">';
@@ -117,7 +127,8 @@ class MatomeCMSController extends Controller {
 	{
 
 
-		return view('home');
+		return view('matome_site')
+			->with("keyword",$keyword );
 	}
 
 

@@ -49,7 +49,7 @@ Route::get('/show_user_data_bikebros/{user_parse_id}', 'SolutionController@show_
 Route::get('/matome_cms_publisherlist', 'MatomeCMSController@cms_publisher_list');
 Route::get('/matome_cms_keywordlist', 'MatomeCMSController@cms_keyword_list');
 Route::get('/matome_cms_sitelist', 'MatomeCMSController@cms_site_list');
-Route::get('/matome_site_link', 'MatomeCMSController@matome_link');
+Route::get('/matome_site_link', 'MatomeCMSController@matome_site_link');
 Route::get('/matome_site/{keyword}', 'MatomeCMSController@matome_site');
 
 

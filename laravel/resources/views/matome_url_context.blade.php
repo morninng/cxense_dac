@@ -51,43 +51,48 @@ function generate_matome(){
   var save_promise = new Array();
   var save_urlcontext_promise = new Array();
 
+/*
   for(var k=0; k<keyword_list.length; k++){
     var keyword = keyword_list[k];
-    var MatomeKeyword = Parse.Object.extend("MatomeKeyword");
-    eval("matome_keyword_" + keyword + " = new MatomeKeyword();");
+
   //  var matome_keyword = new MatomeKeyword();
-    eval("matome_keyword_" + keyword + ".set('keyword'," + keyword + ");");
     //matome_keyword.set("keyword",keyword)
       save_promise.push(eval("matome_keyword_" + keyword + ".save()"));
     //save_promise.push(matome_keyword.save());
   }
   Parse.Promise.when(save_promise).then(function(){
+*/
+  for( var i=0; i< keyword_list.length; i++){
+    var keyword = keyword_list[i];
+    var MatomeKeyword = Parse.Object.extend("MatomeKeyword");
+    var matome_keyword = new MatomeKeyword();
+    matome_keyword.set('keywordlist',keyword);
+    var url_content_array = eval("document." + keyword + ".elements");
 
-    for( var i=0; i< keyword_list.length; i++){
-      var keyword = keyword_list[i];
-      var url_content_array = eval("document." + keyword + ".elements");
-      for(var j=0; j<url_content_array.length; j++ ){
-        if( url_content_array[j].checked ){
-
-          var MatomeContext = Parse.Object.extend("MatomeContext");
-          var matome_context = new MatomeContext();
-          matome_context.set("keyword",keyword);
-          matome_context.set("title",all_matome_data_array[i][j]["title"]);  
-          matome_context.set("url",all_matome_data_array[i][j]["url"]);  
-          matome_context.set("img_src",all_matome_data_array[i][j]["img_src"]);
-          matome_context.set("descript",all_matome_data_array[i][j]["description"]); 
-          eval("matome_keyword_" + keyword + ".add(" + matome_context + ");");
-        }
+    for(var j=0; j<url_content_array.length; j++ ){
+      if( url_content_array[j].checked ){
+        var MatomeContext = Parse.Object.extend("MatomeContext");
+        var matome_context = new MatomeContext();
+        matome_context.set("context_keyword",keyword);
+        matome_context.set("title",all_matome_data_array[i][j]["title"]);  
+        matome_context.set("url",all_matome_data_array[i][j]["url"]);  
+        matome_context.set("img_src",all_matome_data_array[i][j]["img_src"]);
+        matome_context.set("descript",all_matome_data_array[i][j]["description"]); 
+        matome_keyword.add("matome_context", matome_context);
       }
-      save_urlcontext_promise.push( eval("matome_keyword_" + keyword + ".save();"));
     }
-    Parse.Promise.when(save_urlcontext_promise).then(function(){
-      console.log("go to matome page");
+    save_urlcontext_promise.push( matome_keyword.save() );
+  }
+  Parse.Promise.when(save_urlcontext_promise).then(function(){
+    console.log("go to matome page");
+    
 
-    })
+  }, function(error) {
+  // This isn't called because the error was already handled.
+    console.log("fail with" + error);
   });
   
-
+/*
   
   for( var i=0; i< keyword_list.length; i++){
     var keyword = keyword_list[i];
@@ -104,6 +109,7 @@ function generate_matome(){
       }
     }
   }
+  */
 
 }
 
