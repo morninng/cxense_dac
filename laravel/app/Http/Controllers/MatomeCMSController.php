@@ -88,9 +88,11 @@ class MatomeCMSController extends Controller {
 				var_dump($url_list_array[$i]);
 				$graph = \OpenGraph::fetch($url_list_array[$i]); 
 
-				var_dump($graph);
-				foreach($graph as $g_i => $g_value){
-					$url_related_data->{$g_i} = $g_value;
+				//var_dump($graph);
+				if($graph){
+					foreach($graph as $g_i => $g_value){
+						$url_related_data->{$g_i} = $g_value;
+					}
 				}
 /*
 				echo '<br>graph data <br>';
@@ -145,8 +147,11 @@ class MatomeCMSController extends Controller {
 
 		$plainjson_payload = "{\"siteId\":\"$this->cxense_siteid\",
 							   \"groups\":[\"url\"],
-							   \"count\":2,
-		\"filters\":[{\"type\":\"keyword\",\"group\":\"concept\", \"item\":\"$keyword\"}]
+							   \"count\":3,
+							   \"fields\":[\"activeTime\"],
+							   \"orderBy\":\"activeTime\",
+		\"filters\":[{\"type\":\"keyword\",\"group\":\"concept\", \"item\":\"$keyword\"},
+					{\"type\":\"keyword\", \"group\":\"pageclass\", \"item\":\"article\"}]
 								}";
 		$options = array(
 		    'http' => array(
